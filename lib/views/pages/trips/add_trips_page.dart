@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +30,8 @@ class AddTripsPage extends StatelessWidget {
     divisionTextController.clear();
     descriptionTextController.clear();
     daysTextController.clear();
-     costTextController.clear();
-     capacityTextController.clear();
+    costTextController.clear();
+    capacityTextController.clear();
     context.read<HotelProvider>().reset();
     context.read<TripProvider>().reset();
   }
@@ -161,8 +160,13 @@ class AddTripsPage extends StatelessWidget {
                       );
                     },
                     child: Consumer<TripProvider>(
-                      builder: (context, tripProvider, child) =>
-                          Text(tripProvider.selectedDate ?? 'Select Date'),
+                      builder: (context, tripProvider, child) => Text(
+                        tripProvider.selectedDate != null
+                            ? getFormattedDateTime(
+                                dateTime: tripProvider
+                                    .selectedDate!.millisecondsSinceEpoch)
+                            : 'Select Date',
+                      ),
                     ),
                   ),
                 ),

@@ -53,7 +53,7 @@ class TripsPage extends StatelessWidget {
                               )
                             : Image.asset('images/img.png'),
                         title: Text(trip.placeName!),
-                        subtitle: Text(trip.schedule!),
+                        subtitle: Text(getFormattedDateTime(dateTime: trip.schedule!)),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

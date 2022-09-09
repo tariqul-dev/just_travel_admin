@@ -136,7 +136,7 @@ class Rooms {
   List<String>? photos;
   String? description;
   num? price;
-  dynamic unavailableDates;
+  num? unavailableDates;
   String? roomNumber;
   String? id;
 
@@ -147,7 +147,7 @@ class Rooms {
     List<String>? photos,
     String? description,
     num? price,
-    dynamic unavailableDates,
+    num? unavailableDates,
     String? id,
   }) =>
       Rooms(

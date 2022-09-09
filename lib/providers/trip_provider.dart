@@ -8,7 +8,7 @@ import '../models/db-models/image_upload_model.dart';
 import '../models/db-models/trip_model.dart';
 
 class TripProvider extends ChangeNotifier {
-  String? selectedDate;
+  DateTime? selectedDate;
   List<String> tripImageList = [];
   ImageSource _imageSource = ImageSource.camera;
   String? tripImagePath;
@@ -25,7 +25,7 @@ class TripProvider extends ChangeNotifier {
 
   void setDate(DateTime? dateTime) {
     print('date selected provider: $dateTime');
-    selectedDate = DateFormat('yyyy-MM-dd').format(dateTime!);
+    selectedDate = dateTime;
     print('sele: $selectedDate');
     notifyListeners();
   }
@@ -78,7 +78,7 @@ class TripProvider extends ChangeNotifier {
       description: description,
       city: city,
       division: division,
-      schedule: selectedDate,
+      schedule: selectedDate?.millisecondsSinceEpoch,
       days: days,
       photos: tripImageList,
       capacity: capacity,

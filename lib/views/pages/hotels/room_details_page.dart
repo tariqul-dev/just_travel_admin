@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/utils/helper_functions.dart';
 
 import '../../../constants/urls.dart';
 import '../../../models/db-models/hotel_model.dart';
@@ -82,7 +83,7 @@ class RoomDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text('Unavailable Dates'),
-                  Text(room.unavailableDates ?? 'Free'),
+                  Text(room.unavailableDates != null ? getFormattedDateTime(dateTime: room.unavailableDates!) : 'Free'),
                 ],
               ),
             ),

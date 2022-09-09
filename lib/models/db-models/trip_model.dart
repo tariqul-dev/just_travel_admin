@@ -35,7 +35,7 @@ class TripModel {
   String? description;
   String? city;
   String? division;
-  String? schedule;
+  num? schedule;
   num? days;
   List<String>? photos;
   num? capacity;
@@ -49,7 +49,7 @@ TripModel copyWith({  String? placeName,
   String? description,
   String? city,
   String? division,
-  String? schedule,
+  num? schedule,
   num? days,
   List<String>? photos,
   num? capacity,
