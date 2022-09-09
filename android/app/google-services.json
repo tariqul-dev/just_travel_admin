@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "393163632637",
+    "project_id": "just-travel-eb28b",
+    "storage_bucket": "just-travel-eb28b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393163632637:android:2d311021e696987756b394",
+        "android_client_info": {
+          "package_name": "com.tariquldev.just_travel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDptrHwi__ttFA8xNBMlK6zQjhimzMO8qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393163632637:android:bf607bb41597763256b394",
+        "android_client_info": {
+          "package_name": "com.tariquldev.just_travel_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDptrHwi__ttFA8xNBMlK6zQjhimzMO8qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
