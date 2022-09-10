@@ -1,6 +1,6 @@
 import 'package:http/http.dart';
 
-import '../constants/urls.dart';
+import '../utils/constants/urls.dart';
 
 class OfferApi {
   static getOffer() async {

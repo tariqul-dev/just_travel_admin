@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/views/pages/trips/trip_details_page.dart';
 
 import '../models/db-models/hotel_model.dart';
 import '../views/pages/dashboard_page.dart';
@@ -72,6 +73,10 @@ class RouteGenerator {
         case AddTripsPage.routeName:
         return MaterialPageRoute(
           builder: (context) => AddTripsPage(),
+        );
+        case TripDetailsPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => TripDetailsPage(id: args as String),
         );
 
     /*

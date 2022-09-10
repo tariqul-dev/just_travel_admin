@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/urls.dart';
 import '../../../models/db-models/hotel_model.dart';
 import '../../../providers/hotel_provider.dart';
 import '../../../providers/room_provider.dart';
+import '../../../utils/constants/urls.dart';
 import '../../../utils/dialogs/hotel_room/add_room_dialog.dart';
 import '../../../utils/dialogs/hotel_room/hotel_image_picker_dialog.dart';
 import '../../../utils/helper_functions.dart';

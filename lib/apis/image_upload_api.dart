@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
-import '../constants/urls.dart';
 import '../models/db-models/image_upload_model.dart';
+import '../utils/constants/urls.dart';
 
 class ImageUploadApi {
   static Future<ImageUploadModel?> uploadImage(String imagePath) async {

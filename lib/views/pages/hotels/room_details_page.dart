@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/utils/helper_functions.dart';
-
-import '../../../constants/urls.dart';
 import '../../../models/db-models/hotel_model.dart';
+import '../../../utils/constants/urls.dart';
 
 class RoomDetailsPage extends StatelessWidget {
   static const routeName = '/room-details-page';

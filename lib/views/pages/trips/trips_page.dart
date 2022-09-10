@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/views/pages/trips/trip_details_page.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/urls.dart';
 import '../../../models/db-models/trip_model.dart';
 import '../../../providers/trip_provider.dart';
+import '../../../utils/constants/urls.dart';
 import '../../../utils/dialogs/confirm_dialog.dart';
 import '../../../utils/helper_functions.dart';
 import '../../widgets/loading_widget.dart';
@@ -39,9 +39,9 @@ class TripsPage extends StatelessWidget {
                       TripModel trip = tripList[index];
                       return ListTile(
                         onTap: () {
-                          // Navigator.pushNamed(
-                          //     context, TripDetailsPage.routeName,
-                          //     arguments: hotel.id);
+                          Navigator.pushNamed(
+                              context, TripDetailsPage.routeName,
+                              arguments: trip.id);
                         },
                         contentPadding: const EdgeInsets.symmetric(vertical: 5),
                         leading: trip.photos != null && trip.photos!.isNotEmpty

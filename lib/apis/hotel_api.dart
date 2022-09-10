@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-
-import '../constants/urls.dart';
 import '../models/db-models/hotel_model.dart';
+import '../utils/constants/urls.dart';
 
 class HotelApi {
   // requesting create hotel to api

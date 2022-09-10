@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/utils/dialogs/hotel_room/room_image_picker_dialog.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/urls.dart';
 import '../../../models/db-models/hotel_model.dart';
 import '../../../providers/hotel_provider.dart';
 import '../../../providers/room_provider.dart';
 import '../../../views/widgets/custom_form_field.dart';
 import '../../../views/widgets/upload_image_card.dart';
+import '../../constants/urls.dart';
 import '../../helper_functions.dart';
 
 addRoomDialog(BuildContext context, {int index = -1}) {

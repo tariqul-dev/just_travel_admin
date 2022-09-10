@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:393163632637:android:2d311021e696987756b394",
+        "mobilesdk_app_id": "1:393163632637:android:b7aac5d4c119b56156b394",
         "android_client_info": {
           "package_name": "com.tariquldev.just_travel"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "393163632637-ubgsuh3q3auqje5m2k9ipdtfkseeiak4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tariquldev.just_travel",
+            "certificate_hash": "9bacc4ee74f34f9a55dca296751c79c3be5c3475"
+          }
+        },
         {
           "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
           "client_type": 3
@@ -42,6 +50,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "393163632637-9fd04rekdgmqv3bat5d1ts1c1r0hc1gg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tariquldev.just_travel_admin",
+            "certificate_hash": "9bacc4ee74f34f9a55dca296751c79c3be5c3475"
+          }
+        },
         {
           "client_id": "393163632637-h4m43s5g43gll1ibniu5n68jcairbr1f.apps.googleusercontent.com",
           "client_type": 3

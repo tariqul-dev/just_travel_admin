@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/urls.dart';
 import '../../../providers/hotel_provider.dart';
+import '../../../utils/constants/urls.dart';
 import '../../../utils/dialogs/confirm_dialog.dart';
 import '../../../utils/helper_functions.dart';
 import '../../widgets/loading_widget.dart';

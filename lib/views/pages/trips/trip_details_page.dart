@@ -2,13 +2,10 @@ import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/models/db-models/trip_model.dart';
+import 'package:just_travel_admin/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/urls.dart';
-import '../../../models/db-models/hotel_model.dart';
-import '../../../providers/hotel_provider.dart';
-import '../../../providers/room_provider.dart';
-import '../hotels/room_details_page.dart';
+import '../../../utils/constants/urls.dart';
 
 class TripDetailsPage extends StatelessWidget {
   static const routeName = '/trip-details-page';
@@ -17,17 +14,17 @@ class TripDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HotelProvider>().getHotelById(id);
+    context.read<TripProvider>().getTripById(id);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hotel Details'),
+        title: const Text('Trip Details'),
       ),
       body: Center(
-        child: FutureBuilder<HotelModel?>(
-          future: context.read<HotelProvider>().getHotelById(id),
+        child: FutureBuilder<TripModel?>(
+          future: context.read<TripProvider>().getTripById(id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              HotelModel? hotel = snapshot.data;
+              TripModel? trip = snapshot.data;
               return ListView(
                 children: [
                   Padding(
@@ -35,14 +32,14 @@ class TripDetailsPage extends StatelessWidget {
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(0),
                       title: Text(
-                        hotel!.name!,
+                        trip!.placeName!,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       subtitle: Text(
-                        hotel.type!,
+                        trip.city!,
                         style: const TextStyle(
                           fontSize: 13,
                         ),
@@ -54,11 +51,11 @@ class TripDetailsPage extends StatelessWidget {
                     ),
                   ),
                   CarouselSlider.builder(
-                    itemCount: hotel.photos!.length,
+                    itemCount: trip.photos!.length,
                     itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) =>
                         Image.network(
-                      '${baseUrl}uploads/${hotel.photos![itemIndex]}',
+                      '${baseUrl}uploads/${trip.photos![itemIndex]}',
                     ),
                     options: CarouselOptions(
                       height: 200,
@@ -82,42 +79,10 @@ class TripDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text('About'),
-                        Text(hotel.name!),
+                        Text(trip.description!),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // room section
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: hotel.rooms!.isEmpty
-                        ? const Text('No room added')
-                        : ListView.builder(
-                      itemCount: hotel.rooms!.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoomDetailsPage.routeName, arguments: hotel.rooms![index]);
-                        },
-
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: Image.network(
-                          '${baseUrl}uploads/${hotel.rooms![index].photos![0]}',
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        title: Text(hotel.rooms![index].title!),
-                        subtitle: Text(hotel.rooms![index].status!),
-                        trailing:
-                        Text(hotel.rooms![index].price!.toString()),
-                      ),
-                    ),
-                  ),
-
                 ],
               );
             } else if (snapshot.hasError) {

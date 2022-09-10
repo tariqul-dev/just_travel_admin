@@ -14,6 +14,7 @@ class TripProvider extends ChangeNotifier {
   String? tripImagePath;
   XFile? tripImageFile;
   List<TripModel> tripList = [];
+  TripModel? tripModel;
 
   void reset(){
     tripImageList = [];
@@ -107,6 +108,13 @@ class TripProvider extends ChangeNotifier {
       print('Error: $e');
       return tripList;
     }
+  }
+
+  // get trip by id
+  Future<TripModel?> getTripById(String tripId) async {
+    tripModel = await TripApi.getTripById(tripId);
+    notifyListeners();
+    return tripModel;
   }
 
 }
