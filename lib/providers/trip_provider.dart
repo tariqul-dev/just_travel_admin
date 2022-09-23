@@ -16,7 +16,7 @@ class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
   TripModel? tripModel;
 
-  void reset(){
+  void reset() {
     tripImageList = [];
     selectedDate = null;
     tripImagePath = null;
@@ -57,23 +57,23 @@ class TripProvider extends ChangeNotifier {
       }
     }
   }
+
   /*
   * Image picking section end*/
 
   /*
   * ============= insert trip ============*/
 //create hotel
-  Future<bool> saveTrip(
-      {required String placeName,
-        required String city,
-        required String division,
-        required num days,
-        required String description,
-        required String hotelId,
-
-        required num cost,
-        required num capacity,
-      }) async {
+  Future<bool> saveTrip({
+    required String placeName,
+    required String city,
+    required String division,
+    required num days,
+    required String description,
+    required String hotelId,
+    required num cost,
+    required num capacity,
+  }) async {
     final TripModel tripModel = TripModel(
       placeName: placeName,
       description: description,
@@ -84,8 +84,7 @@ class TripProvider extends ChangeNotifier {
       photos: tripImageList,
       capacity: capacity,
       cost: cost,
-      hotel: Hotel(hotelId: hotelId ),
-
+      hotel: hotelId,
     );
     bool isCreated = true;
     await TripApi.createTrip(tripModel);
@@ -116,5 +115,4 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
     return tripModel;
   }
-
 }

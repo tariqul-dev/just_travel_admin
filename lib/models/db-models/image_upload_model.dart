@@ -5,7 +5,6 @@ class ImageUploadModel {
     this.v,
   });
 
-
   @override
   String toString() {
     return 'ImageUploadModel{image: $image, id: $id, v: $v}';
@@ -16,9 +15,11 @@ class ImageUploadModel {
     id = json['_id'];
     v = json['__v'];
   }
+
   String? image;
   String? id;
   num? v;
+
   ImageUploadModel copyWith({
     String? image,
     String? id,
@@ -29,6 +30,7 @@ class ImageUploadModel {
         id: id ?? this.id,
         v: v ?? this.v,
       );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['image'] = image;

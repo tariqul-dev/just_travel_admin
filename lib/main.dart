@@ -22,24 +22,20 @@ void main() async {
     ),
   );
 
-
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
         ),
-
         ChangeNotifierProvider(
           create: (context) => HotelProvider(),
         ),
-
         ChangeNotifierProvider(
           create: (context) => RoomProvider(),
         ),
-
         ChangeNotifierProvider(
-          create: (context) => TripProvider() ..getAllTrips(),
+          create: (context) => TripProvider()..getAllTrips(),
         ),
       ],
       child: const AdminApp(),

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:just_travel_admin/models/db-models/room_model.dart';
 
 import '../apis/hotel_api.dart';
 import '../apis/image_upload_api.dart';
@@ -49,6 +50,7 @@ class HotelProvider extends ChangeNotifier {
       }
     }
   }
+
   /*
   * Image picking section end*/
 
@@ -58,6 +60,7 @@ class HotelProvider extends ChangeNotifier {
     selectedHotelType = value;
     notifyListeners();
   }
+
   setHotel(HotelModel? value) {
     hotelModel = value;
     notifyListeners();
@@ -74,12 +77,13 @@ class HotelProvider extends ChangeNotifier {
   *============================ Hotel api calling section ============================*/
 
   //create hotel
-  Future<bool> saveHotel(
-      {required String hotelName,
-      required String city,
-      required String division,
-      required String description,
-      required List<Rooms> rooms}) async {
+  Future<bool> saveHotel({
+    required String hotelName,
+    required String city,
+    required String division,
+    required String description,
+    required List<RoomModel> rooms,
+  }) async {
     final HotelModel hotelModel = HotelModel(
       name: hotelName,
       city: city,
@@ -87,14 +91,15 @@ class HotelProvider extends ChangeNotifier {
       description: description,
       photos: hotelImageList,
       type: selectedHotelType,
-      rooms: rooms,
+      rooms: List.generate(rooms.length, (index) => rooms[index].id!),
     );
+
     bool isCreated = true;
-    await HotelApi.createHotel(hotelModel);
+    isCreated = await HotelApi.createHotel(hotelModel);
     if (isCreated) {
       getAllHotels();
     }
-    return isCreated;
+    return true;
   }
 
   // delete hotel by id
@@ -106,7 +111,6 @@ class HotelProvider extends ChangeNotifier {
 
   // get all hotels
   Future<List<HotelModel>> getAllHotels() async {
-    print('getAllHotels');
     try {
       hotelList = await HotelApi.getAllHotels();
       notifyListeners();
@@ -125,8 +129,8 @@ class HotelProvider extends ChangeNotifier {
   }
 
   // get hotels by city
-  Future<List<HotelModel>> getHotelsByCity(String city) async {
-    print('getAllHotels');
+  Future<List<HotelModel>?> getHotelsByCity(String city) async {
+    print('get hotel by city');
     try {
       hotelsByCity = await HotelApi.getHotelByCity(city);
       print('hotel by city: $hotelsByCity');
@@ -134,7 +138,7 @@ class HotelProvider extends ChangeNotifier {
       return hotelsByCity;
     } catch (e) {
       print('Error: $e');
-      return hotelsByCity;
+      return null;
     }
   }
 }

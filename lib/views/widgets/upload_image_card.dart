@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class UploadImageCard extends StatelessWidget {
   final Widget child;
   final VoidCallback onTap;
-  const UploadImageCard({ required this.child, required this.onTap, Key? key,}) : super(key: key);
+
+  const UploadImageCard({
+    required this.child,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

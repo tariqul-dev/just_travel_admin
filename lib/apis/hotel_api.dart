@@ -43,10 +43,8 @@ class HotelApi {
 
   // requesting fetching all hotels from api
   static Future<List<HotelModel>> getAllHotels() async {
-    print('in api hotel');
     var request = Request('GET', Uri.parse('${baseUrl}hotels'));
     StreamedResponse response = await request.send();
-    print('in api hotel');
     if (response.statusCode == 200) {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
@@ -55,8 +53,6 @@ class HotelApi {
         data.length,
         (index) => HotelModel.fromJson(data[index]),
       );
-
-      print(hotelModel);
       return hotelModel;
     } else {
       print(response.reasonPhrase);
@@ -91,7 +87,7 @@ class HotelApi {
       var data = json.decode(enCodedDate);
       List<HotelModel> hotelModel = List.generate(
         data.length,
-            (index) => HotelModel.fromJson(data[index]),
+        (index) => HotelModel.fromJson(data[index]),
       );
 
       print('hotelApi: $hotelModel');

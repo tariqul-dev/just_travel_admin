@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import '../models/db-models/trip_model.dart';
 import '../utils/constants/urls.dart';
 
-class TripApi{
+class TripApi {
   // requesting create hotel to api
   static Future<bool> createTrip(TripModel tripModel) async {
     var headers = {'Content-Type': 'application/json'};
@@ -39,7 +39,7 @@ class TripApi{
 
       List<TripModel> tripModels = List.generate(
         data.length,
-            (index) => TripModel.fromJson(data[index]),
+        (index) => TripModel.fromJson(data[index]),
       );
 
       print(tripModels);

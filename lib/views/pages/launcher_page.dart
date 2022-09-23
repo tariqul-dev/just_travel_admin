@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel_admin/views/pages/signin_page.dart';
+import 'package:just_travel_admin/providers/auth_provider.dart';
+import 'package:just_travel_admin/views/pages/dashboard/dashboard_page.dart';
+import 'package:just_travel_admin/views/pages/signin/signin_page.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/auth_provider.dart';
-import 'dashboard_page.dart';
 
 class LauncherPage extends StatefulWidget {
   static const routeName = '/';
+
   const LauncherPage({Key? key}) : super(key: key);
 
   @override
@@ -25,10 +25,8 @@ class _LauncherPageState extends State<LauncherPage> {
     Future.delayed(
       Duration.zero,
       () {
-
         Navigator.pushNamedAndRemoveUntil(
-                  context, DashBoardPage.routeName, (route) => false);
-
+            context, DashBoardPage.routeName, (route) => false);
 
         //TODO: fix routing and authentication
         print('launcher page is deciding');

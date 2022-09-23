@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DashboardItem{
+class DashboardItem {
   IconData icon;
   String title;
 

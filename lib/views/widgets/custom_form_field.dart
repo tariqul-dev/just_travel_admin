@@ -12,6 +12,7 @@ class CustomFormField extends StatelessWidget {
   TextInputType textInputType;
   final String labelText;
   VoidCallback? onEditingComplete;
+
   CustomFormField({
     required this.controller,
     this.icon,
@@ -37,7 +38,6 @@ class CustomFormField extends StatelessWidget {
           ),
           labelText: labelText,
           prefixIcon: isPrefIcon ? Icon(icon) : null,
-
           suffixIcon: isPassword
               ? IconButton(
                   onPressed: authProvider.changeVisibility,
@@ -54,9 +54,7 @@ class CustomFormField extends StatelessWidget {
           }
           return null;
         },
-
         onEditingComplete: onEditingComplete,
-
       ),
     );
   }

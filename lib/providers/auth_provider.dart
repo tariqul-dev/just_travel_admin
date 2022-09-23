@@ -49,13 +49,12 @@ class AuthProvider extends ChangeNotifier {
   // authenticating admin
   Future<void> authenticate() async {
     try {
-        final status = await AuthService.signIn(email!, password!);
+      final status = await AuthService.signIn(email!, password!);
 
-        if (!status) {
-          AuthService.signOut();
-          throw 'You are not admin';
-        }
-
+      if (!status) {
+        AuthService.signOut();
+        throw 'You are not admin';
+      }
     } on FirebaseAuthException catch (e) {
       setError(e.message!);
     }
