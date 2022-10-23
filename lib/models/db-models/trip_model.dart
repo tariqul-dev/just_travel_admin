@@ -1,114 +1,111 @@
 class TripModel {
   TripModel({
-    this.id,
-    this.placeName,
-    this.description,
-    this.city,
-    this.division,
-    this.schedule,
-    this.days,
-    this.photos,
-    this.capacity,
-    this.cost,
-    this.users,
-    this.hotel,
-    this.rooms,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-    this.status,
-  });
-
-  @override
-  String toString() {
-    return 'TripModel{id: $id, placeName: $placeName, description: $description, city: $city, division: $division, schedule: $schedule, days: $days, photos: $photos, capacity: $capacity, cost: $cost, users: $users, hotel: $hotel, rooms: $rooms, createdAt: $createdAt, updatedAt: $updatedAt, v: $v, status: $status}';
-  }
+      this.placeName, 
+      this.description, 
+      this.city, 
+      this.division, 
+      this.startDate, 
+      this.endDate, 
+      this.photos, 
+      this.capacity, 
+      this.joinedPersons, 
+      this.status, 
+      this.cost, 
+      this.users, 
+      this.hotel, 
+      this.rooms, 
+      this.id, 
+      this.createdAt, 
+      this.updatedAt, 
+      this.v,});
 
   TripModel.fromJson(dynamic json) {
-    id = json['_id'];
     placeName = json['placeName'];
     description = json['description'];
     city = json['city'];
     division = json['division'];
-    schedule = json['schedule'];
-    days = json['days'];
+    startDate = json['startDate'];
+    endDate = json['endDate'];
     photos = json['photos'] != null ? json['photos'].cast<String>() : [];
     capacity = json['capacity'];
+    joinedPersons = json['joinedPersons'];
+    status = json['status'];
     cost = json['cost'];
     users = json['users'] != null ? json['users'].cast<String>() : [];
     hotel = json['hotel'];
     rooms = json['rooms'] != null ? json['rooms'].cast<String>() : [];
+    id = json['_id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
-    status = json['status'];
   }
-  String? id;
   String? placeName;
   String? description;
   String? city;
   String? division;
-  num? schedule;
-  num? days;
+  num? startDate;
+  num? endDate;
   List<String>? photos;
   num? capacity;
+  num? joinedPersons;
+  String? status;
   num? cost;
   List<String>? users;
   String? hotel;
   List<String>? rooms;
+  String? id;
   String? createdAt;
   String? updatedAt;
   num? v;
-  String? status;
-  TripModel copyWith({
-    String? id,
-    String? placeName,
-    String? description,
-    String? city,
-    String? division,
-    num? schedule,
-    num? days,
-    List<String>? photos,
-    num? capacity,
-    num? cost,
-    List<String>? users,
-    String? hotel,
-    List<String>? rooms,
-    String? createdAt,
-    String? updatedAt,
-    num? v,
-    String? status,
-  }) =>
-      TripModel(
-        id: id ?? this.id,
-        placeName: placeName ?? this.placeName,
-        description: description ?? this.description,
-        city: city ?? this.city,
-        division: division ?? this.division,
-        schedule: schedule ?? this.schedule,
-        days: days ?? this.days,
-        photos: photos ?? this.photos,
-        capacity: capacity ?? this.capacity,
-        cost: cost ?? this.cost,
-        users: users ?? this.users,
-        hotel: hotel ?? this.hotel,
-        rooms: rooms ?? this.rooms,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        v: v ?? this.v,
-        status: status ?? this.status,
-      );
+TripModel copyWith({  String? placeName,
+  String? description,
+  String? city,
+  String? division,
+  num? startDate,
+  num? endDate,
+  List<String>? photos,
+  num? capacity,
+  num? joinedPersons,
+  String? status,
+  num? cost,
+  List<String>? users,
+  String? hotel,
+  List<String>? rooms,
+  String? id,
+  String? createdAt,
+  String? updatedAt,
+  num? v,
+}) => TripModel(  placeName: placeName ?? this.placeName,
+  description: description ?? this.description,
+  city: city ?? this.city,
+  division: division ?? this.division,
+  startDate: startDate ?? this.startDate,
+  endDate: endDate ?? this.endDate,
+  photos: photos ?? this.photos,
+  capacity: capacity ?? this.capacity,
+  joinedPersons: joinedPersons ?? this.joinedPersons,
+  status: status ?? this.status,
+  cost: cost ?? this.cost,
+  users: users ?? this.users,
+  hotel: hotel ?? this.hotel,
+  rooms: rooms ?? this.rooms,
+  id: id ?? this.id,
+  createdAt: createdAt ?? this.createdAt,
+  updatedAt: updatedAt ?? this.updatedAt,
+  v: v ?? this.v,
+);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    // map['_id'] = id;
     map['placeName'] = placeName;
     map['description'] = description;
     map['city'] = city;
     map['division'] = division;
-    map['schedule'] = schedule;
-    map['days'] = days;
+    map['startDate'] = startDate;
+    map['endDate'] = endDate;
     map['photos'] = photos;
     map['capacity'] = capacity;
+    map['joinedPersons'] = joinedPersons;
+    map['status'] = status;
     map['cost'] = cost;
     map['users'] = users;
     map['hotel'] = hotel;
@@ -116,7 +113,7 @@ class TripModel {
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
-    map['status'] = status;
     return map;
   }
+
 }

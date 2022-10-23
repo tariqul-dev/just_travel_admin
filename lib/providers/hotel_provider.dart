@@ -17,13 +17,20 @@ class HotelProvider extends ChangeNotifier {
   List<HotelModel> hotelsByCity = [];
   List<String> hotelTypeList = ['Five Start', 'Normal'];
   List<String> hotelImageList = [];
+
   String? selectedHotelType;
   ImageSource _imageSource = ImageSource.camera;
   String? hotelImagePath;
   XFile? hotelImageFile;
 
   HotelModel? hotelModel;
+  HotelModel? hotelDropdownItem;
 
+  List<String> cityList = [];
+  String? city;
+
+  List<String> divisionList = [];
+  String? division;
 /*
   * Image picking section start*/
   Future<void> hotelPickImage(bool isCamera, {required int index}) async {
@@ -61,6 +68,36 @@ class HotelProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setHotelFromDropDown(HotelModel? value) {
+    hotelDropdownItem = value;
+    notifyListeners();
+  }
+
+  setCityFromDropDown(String? value) {
+    city = value;
+    notifyListeners();
+  }
+
+  setDivisionFromDropDown(String? value) {
+    division = value;
+    notifyListeners();
+  }
+
+  void getCityList() {
+    List<String> cities = [];
+    List<String> divisions = [];
+    for (HotelModel hotel in hotelList) {
+      cities.add(hotel.city!);
+      divisions.add(hotel.division!);
+    }
+
+    cityList = cities.toSet().toList();
+    divisionList = divisions.toSet().toList();
+    // city = cityList[0];
+    // division = divisionList[0];
+    notifyListeners();
+  }
+
   setHotel(HotelModel? value) {
     hotelModel = value;
     notifyListeners();
@@ -70,6 +107,17 @@ class HotelProvider extends ChangeNotifier {
     hotelImageList = [];
     selectedHotelType = null;
     hotelModel = null;
+
+    hotelsByCity = [];
+
+    hotelDropdownItem = null;
+
+    cityList = [];
+    city = null;
+
+    divisionList = [];
+    division = null;
+
     notifyListeners();
   }
 
@@ -113,6 +161,7 @@ class HotelProvider extends ChangeNotifier {
   Future<List<HotelModel>> getAllHotels() async {
     try {
       hotelList = await HotelApi.getAllHotels();
+      // hotelDropdownItem = hotelList[0];
       notifyListeners();
       return hotelList;
     } catch (e) {

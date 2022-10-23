@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/models/db-models/trip_model.dart';
+import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:just_travel_admin/providers/trip_provider.dart';
 import 'package:just_travel_admin/utils/constants/urls.dart';
 import 'package:just_travel_admin/utils/helper_functions.dart';
@@ -55,7 +56,7 @@ class TripsPage extends StatelessWidget {
                             : Image.asset('images/img.png'),
                         title: Text(trip.placeName!),
                         subtitle: Text(
-                            getFormattedDateTime(dateTime: trip.schedule!)),
+                            getFormattedDateTime(dateTime: trip.startDate!)),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -105,7 +106,10 @@ class TripsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          await context.read<HotelProvider>().getAllHotels();
+          context.read<HotelProvider>().getCityList();
+
           Navigator.pushNamed(context, AddTripsPage.routeName);
         },
         child: const Icon(Icons.add),

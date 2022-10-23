@@ -8,7 +8,7 @@ import '../models/db-models/image_upload_model.dart';
 import '../models/db-models/trip_model.dart';
 
 class TripProvider extends ChangeNotifier {
-  DateTime? selectedDate;
+  DateTime? tripStartDate, tripEndDate;
   List<String> tripImageList = [];
   ImageSource _imageSource = ImageSource.camera;
   String? tripImagePath;
@@ -16,18 +16,26 @@ class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
   TripModel? tripModel;
 
-  void reset() {
+  void reset(){
     tripImageList = [];
-    selectedDate = null;
+    tripStartDate = null;
+    tripEndDate = null;
     tripImagePath = null;
     tripImageFile = null;
     notifyListeners();
   }
 
-  void setDate(DateTime? dateTime) {
+  void setTripStartDate(DateTime? dateTime) {
     print('date selected provider: $dateTime');
-    selectedDate = dateTime;
-    print('sele: $selectedDate');
+    tripStartDate = dateTime;
+    print('sele: $tripStartDate');
+    notifyListeners();
+  }
+
+  void setTripEndDate(DateTime? dateTime) {
+    print('date selected provider: $dateTime');
+    tripEndDate = dateTime;
+    print('sele: $tripEndDate');
     notifyListeners();
   }
 
@@ -68,7 +76,6 @@ class TripProvider extends ChangeNotifier {
     required String placeName,
     required String city,
     required String division,
-    required num days,
     required String description,
     required String hotelId,
     required num cost,
@@ -79,8 +86,8 @@ class TripProvider extends ChangeNotifier {
       description: description,
       city: city,
       division: division,
-      schedule: selectedDate?.millisecondsSinceEpoch,
-      days: days,
+      startDate: tripStartDate?.millisecondsSinceEpoch,
+      endDate: tripEndDate?.millisecondsSinceEpoch,
       photos: tripImageList,
       capacity: capacity,
       cost: cost,

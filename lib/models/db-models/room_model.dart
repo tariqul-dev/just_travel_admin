@@ -1,28 +1,22 @@
 class RoomModel {
   RoomModel({
-    this.id,
-    this.title,
-    this.status,
-    this.maxCapacity,
-    this.photos,
-    this.description,
-    this.price,
-    this.roomNumber,
-    this.unavailableDates,
-    this.hotel,
-    this.users,
-    this.v,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  @override
-  String toString() {
-    return 'RoomModel{id: $id, title: $title, status: $status, maxCapacity: $maxCapacity, photos: $photos, description: $description, price: $price, roomNumber: $roomNumber, unavailableDates: $unavailableDates, hotel: $hotel, users: $users, v: $v, createdAt: $createdAt, updatedAt: $updatedAt}';
-  }
+      this.title, 
+      this.status, 
+      this.maxCapacity, 
+      this.photos, 
+      this.description, 
+      this.price, 
+      this.roomNumber, 
+      this.checkIn, 
+      this.checkOut, 
+      this.hotel, 
+      this.users, 
+      this.id, 
+      this.createdAt, 
+      this.updatedAt, 
+      this.v,});
 
   RoomModel.fromJson(dynamic json) {
-    id = json['_id'];
     title = json['title'];
     status = json['status'];
     maxCapacity = json['maxCapacity'];
@@ -30,16 +24,15 @@ class RoomModel {
     description = json['description'];
     price = json['price'];
     roomNumber = json['roomNumber'];
-    unavailableDates = json['unavailableDates'] != null
-        ? json['unavailableDates'].cast<num>()
-        : [];
+    checkIn = json['checkIn'];
+    checkOut = json['checkOut'];
     hotel = json['hotel'];
     users = json['users'] != null ? json['users'].cast<String>() : [];
-    v = json['__v'];
+    id = json['_id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    v = json['__v'];
   }
-  String? id;
   String? title;
   String? status;
   num? maxCapacity;
@@ -47,47 +40,47 @@ class RoomModel {
   String? description;
   num? price;
   String? roomNumber;
-  List<num>? unavailableDates;
+  num? checkIn;
+  num? checkOut;
   String? hotel;
   List<String>? users;
-  num? v;
+  String? id;
   String? createdAt;
   String? updatedAt;
-  RoomModel copyWith({
-    String? id,
-    String? title,
-    String? status,
-    num? maxCapacity,
-    List<String>? photos,
-    String? description,
-    num? price,
-    String? roomNumber,
-    List<num>? unavailableDates,
-    String? hotel,
-    List<String>? users,
-    num? v,
-    String? createdAt,
-    String? updatedAt,
-  }) =>
-      RoomModel(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        status: status ?? this.status,
-        maxCapacity: maxCapacity ?? this.maxCapacity,
-        photos: photos ?? this.photos,
-        description: description ?? this.description,
-        price: price ?? this.price,
-        roomNumber: roomNumber ?? this.roomNumber,
-        unavailableDates: unavailableDates ?? this.unavailableDates,
-        hotel: hotel ?? this.hotel,
-        users: users ?? this.users,
-        v: v ?? this.v,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
+  num? v;
+RoomModel copyWith({  String? title,
+  String? status,
+  num? maxCapacity,
+  List<String>? photos,
+  String? description,
+  num? price,
+  String? roomNumber,
+  num? checkIn,
+  num? checkOut,
+  String? hotel,
+  List<String>? users,
+  String? id,
+  String? createdAt,
+  String? updatedAt,
+  num? v,
+}) => RoomModel(  title: title ?? this.title,
+  status: status ?? this.status,
+  maxCapacity: maxCapacity ?? this.maxCapacity,
+  photos: photos ?? this.photos,
+  description: description ?? this.description,
+  price: price ?? this.price,
+  roomNumber: roomNumber ?? this.roomNumber,
+  checkIn: checkIn ?? this.checkIn,
+  checkOut: checkOut ?? this.checkOut,
+  hotel: hotel ?? this.hotel,
+  users: users ?? this.users,
+  id: id ?? this.id,
+  createdAt: createdAt ?? this.createdAt,
+  updatedAt: updatedAt ?? this.updatedAt,
+  v: v ?? this.v,
+);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    // map['_id'] = id;
     map['title'] = title;
     map['status'] = status;
     map['maxCapacity'] = maxCapacity;
@@ -95,12 +88,15 @@ class RoomModel {
     map['description'] = description;
     map['price'] = price;
     map['roomNumber'] = roomNumber;
-    map['unavailableDates'] = unavailableDates;
+    map['checkIn'] = checkIn;
+    map['checkOut'] = checkOut;
     map['hotel'] = hotel;
     map['users'] = users;
-    map['__v'] = v;
+    map['_id'] = id;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
+    map['__v'] = v;
     return map;
   }
+
 }
