@@ -31,6 +31,7 @@ saveButtonFunction(
     }
   } catch (error) {
     showMsg(context, 'Failed To Create Hotel');
+    print('Error creating hotel: $error');
     Navigator.pop(context);
   }
 }

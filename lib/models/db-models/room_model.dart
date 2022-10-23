@@ -92,7 +92,6 @@ RoomModel copyWith({  String? title,
     map['checkOut'] = checkOut;
     map['hotel'] = hotel;
     map['users'] = users;
-    map['_id'] = id;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
