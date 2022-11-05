@@ -28,6 +28,28 @@ class RoomApi {
     }
   }
 
+  // requesting create room to api
+  static Future<RoomModel?> addRoom(RoomModel roomModel) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = Request('POST', Uri.parse('${baseUrl}rooms'));
+    request.body = json.encode(roomModel.toJson());
+    request.headers.addAll(headers);
+    try {
+      StreamedResponse response = await request.send();
+      if (response.statusCode == 201) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+        return RoomModel.fromJson(decodedData);
+      } else {
+        print('failed because: ${response.reasonPhrase}');
+        throw response.reasonPhrase.toString();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return null;
+    }
+  }
+
   // Delete
   static Future<void> deleteRoomById(String id) async {
     var request = Request('DELETE', Uri.parse('${baseUrl}rooms/delete/$id'));

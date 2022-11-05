@@ -15,6 +15,13 @@ class TripProvider extends ChangeNotifier {
   XFile? tripImageFile;
   List<TripModel> tripList = [];
   TripModel? tripModel;
+  List<TripModel> hostTripList = [];
+
+  // on init
+  void onInit(){
+    getAllTrips();
+  }
+
 
   void reset(){
     tripImageList = [];
@@ -74,24 +81,25 @@ class TripProvider extends ChangeNotifier {
 //create hotel
   Future<bool> saveTrip({
     required String placeName,
-    required String city,
+    required String district,
     required String division,
     required String description,
     required String hotelId,
     required num cost,
-    required num capacity,
+    required num travellers, required,
   }) async {
     final TripModel tripModel = TripModel(
       placeName: placeName,
       description: description,
-      city: city,
+      district: district,
       division: division,
       startDate: tripStartDate?.millisecondsSinceEpoch,
       endDate: tripEndDate?.millisecondsSinceEpoch,
       photos: tripImageList,
-      capacity: capacity,
+      travellers: travellers,
       cost: cost,
       hotel: hotelId,
+
     );
     bool isCreated = true;
     await TripApi.createTrip(tripModel);
@@ -122,4 +130,16 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
     return tripModel;
   }
+
+// get trips host
+Future<List<TripModel>> getTripsByHost(String host) async {
+  try {
+    hostTripList = await TripApi.getTripsByHost(host);
+    notifyListeners();
+    return hostTripList;
+  } catch (e) {
+    print('Error: $e');
+    return hostTripList;
+  }
+}
 }

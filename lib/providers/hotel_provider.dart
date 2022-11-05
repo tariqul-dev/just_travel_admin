@@ -26,11 +26,14 @@ class HotelProvider extends ChangeNotifier {
   HotelModel? hotelModel;
   HotelModel? hotelDropdownItem;
 
-  List<String> cityList = [];
   String? city;
 
   List<String> divisionList = [];
   String? division;
+  List<HotelModel> hotelsByDistrict = [];
+
+  HotelModel? finalSelectedHotel;
+
 /*
   * Image picking section start*/
   Future<void> hotelPickImage(bool isCamera, {required int index}) async {
@@ -83,20 +86,13 @@ class HotelProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getCityList() {
-    List<String> cities = [];
-    List<String> divisions = [];
-    for (HotelModel hotel in hotelList) {
-      cities.add(hotel.city!);
-      divisions.add(hotel.division!);
-    }
-
-    cityList = cities.toSet().toList();
-    divisionList = divisions.toSet().toList();
-    // city = cityList[0];
-    // division = divisionList[0];
+  // this will select hotel for booking
+  setFinalSelectedHotel(HotelModel value) {
+    finalSelectedHotel = value;
     notifyListeners();
   }
+
+
 
   setHotel(HotelModel? value) {
     hotelModel = value;
@@ -112,8 +108,8 @@ class HotelProvider extends ChangeNotifier {
 
     hotelDropdownItem = null;
 
-    cityList = [];
-    city = null;
+    finalSelectedHotel = null;
+    hotelsByDistrict = [];
 
     divisionList = [];
     division = null;
@@ -127,14 +123,14 @@ class HotelProvider extends ChangeNotifier {
   //create hotel
   Future<bool> saveHotel({
     required String hotelName,
-    required String city,
+    required String district,
     required String division,
     required String description,
     required List<RoomModel> rooms,
   }) async {
     final HotelModel hotelModel = HotelModel(
       name: hotelName,
-      city: city,
+      district: district,
       division: division,
       description: description,
       photos: hotelImageList,
@@ -177,14 +173,12 @@ class HotelProvider extends ChangeNotifier {
     return hotelModel;
   }
 
-  // get hotels by city
-  Future<List<HotelModel>?> getHotelsByCity(String city) async {
-    print('get hotel by city');
+  // get hotels by district
+  Future<List<HotelModel>?> getHotelsByDistrict(String district) async {
     try {
-      hotelsByCity = await HotelApi.getHotelByCity(city);
-      print('hotel by city: $hotelsByCity');
+      hotelsByDistrict = await HotelApi.getHotelByDistrict(district);
       notifyListeners();
-      return hotelsByCity;
+      return hotelsByDistrict;
     } catch (e) {
       print('Error: $e');
       return null;

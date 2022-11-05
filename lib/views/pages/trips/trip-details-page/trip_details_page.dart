@@ -40,7 +40,7 @@ class TripDetailsPage extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        trip.city!,
+                        trip.district!,
                         style: const TextStyle(
                           fontSize: 13,
                         ),

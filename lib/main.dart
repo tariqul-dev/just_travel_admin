@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_travel_admin/providers/auth_provider.dart';
+import 'package:just_travel_admin/providers/districts_provider.dart';
 import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:just_travel_admin/providers/room_provider.dart';
 import 'package:just_travel_admin/providers/trip_provider.dart';
@@ -36,6 +37,10 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => TripProvider()..getAllTrips(),
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => DistrictsProvider(),
         ),
       ],
       child: const AdminApp(),

@@ -4,7 +4,7 @@ class UserModel {
     this.mobile,
     this.id,
     this.name,
-    this.city,
+    this.district,
     this.division,
     this.profileImage,
     this.coverImage,
@@ -17,7 +17,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel{email: $email, mobile: $mobile, id: $id, name: $name, city: $city, division: $division, profileImage: $profileImage, coverImage: $coverImage, uploadImages: $uploadImages, trips: $trips, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
+    return 'UserModel{email: $email, mobile: $mobile, id: $id, name: $name, district: $district, division: $division, profileImage: $profileImage, coverImage: $coverImage, uploadImages: $uploadImages, trips: $trips, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
   }
 
   UserModel.fromJson(dynamic json) {
@@ -25,7 +25,7 @@ class UserModel {
     mobile = json['mobile'] != null ? Mobile.fromJson(json['mobile']) : null;
     id = json['_id'];
     name = json['name'];
-    city = json['city'];
+    district = json['district'];
     division = json['division'];
     profileImage = json['profileImage'];
     coverImage = json['coverImage'];
@@ -40,7 +40,7 @@ class UserModel {
   Mobile? mobile;
   String? id;
   String? name;
-  String? city;
+  String? district;
   String? division;
   String? profileImage;
   String? coverImage;
@@ -54,7 +54,7 @@ class UserModel {
     Mobile? mobile,
     String? id,
     String? name,
-    String? city,
+    String? district,
     String? division,
     String? profileImage,
     String? coverImage,
@@ -69,7 +69,7 @@ class UserModel {
         mobile: mobile ?? this.mobile,
         id: id ?? this.id,
         name: name ?? this.name,
-        city: city ?? this.city,
+        district: district ?? this.district,
         division: division ?? this.division,
         profileImage: profileImage ?? this.profileImage,
         coverImage: coverImage ?? this.coverImage,
@@ -87,9 +87,8 @@ class UserModel {
     if (mobile != null) {
       map['mobile'] = mobile?.toJson();
     }
-    map['_id'] = id;
     map['name'] = name;
-    map['city'] = city;
+    map['district'] = district;
     map['division'] = division;
     map['profileImage'] = profileImage;
     map['coverImage'] = coverImage;

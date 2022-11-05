@@ -9,6 +9,7 @@ class RoomModel {
       this.roomNumber, 
       this.checkIn, 
       this.checkOut, 
+      this.isAvailable, 
       this.hotel, 
       this.users, 
       this.id, 
@@ -26,6 +27,7 @@ class RoomModel {
     roomNumber = json['roomNumber'];
     checkIn = json['checkIn'];
     checkOut = json['checkOut'];
+    isAvailable = json['isAvailable'];
     hotel = json['hotel'];
     users = json['users'] != null ? json['users'].cast<String>() : [];
     id = json['_id'];
@@ -42,6 +44,7 @@ class RoomModel {
   String? roomNumber;
   num? checkIn;
   num? checkOut;
+  bool? isAvailable;
   String? hotel;
   List<String>? users;
   String? id;
@@ -57,6 +60,7 @@ RoomModel copyWith({  String? title,
   String? roomNumber,
   num? checkIn,
   num? checkOut,
+  bool? isAvailable,
   String? hotel,
   List<String>? users,
   String? id,
@@ -72,6 +76,7 @@ RoomModel copyWith({  String? title,
   roomNumber: roomNumber ?? this.roomNumber,
   checkIn: checkIn ?? this.checkIn,
   checkOut: checkOut ?? this.checkOut,
+  isAvailable: isAvailable ?? this.isAvailable,
   hotel: hotel ?? this.hotel,
   users: users ?? this.users,
   id: id ?? this.id,
@@ -90,6 +95,7 @@ RoomModel copyWith({  String? title,
     map['roomNumber'] = roomNumber;
     map['checkIn'] = checkIn;
     map['checkOut'] = checkOut;
+    map['isAvailable'] = isAvailable;
     map['hotel'] = hotel;
     map['users'] = users;
     map['createdAt'] = createdAt;

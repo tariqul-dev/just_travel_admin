@@ -66,4 +66,25 @@ class TripApi {
       return null;
     }
   }
+
+  // get trips by host
+  static Future<List<TripModel>> getTripsByHost(String host) async {
+    var request = Request('GET', Uri.parse('${baseUrl}trips/host/$host'));
+    StreamedResponse response = await request.send();
+    // print('in api trip');
+    if (response.statusCode == 200) {
+      var enCodedDate = await response.stream.bytesToString();
+      var data = json.decode(enCodedDate);
+
+      List<TripModel> tripModels = List.generate(
+        data.length,
+            (index) => TripModel.fromJson(data[index]),
+      );
+
+      return tripModels;
+    } else {
+      print(response.reasonPhrase);
+      return [];
+    }
+  }
 }

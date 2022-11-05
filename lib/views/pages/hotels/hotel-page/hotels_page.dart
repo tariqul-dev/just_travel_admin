@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/providers/districts_provider.dart';
 import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:just_travel_admin/utils/constants/urls.dart';
 import 'package:just_travel_admin/views/pages/hotels/add-hotel-page/add_hotel_page.dart';
 import 'package:just_travel_admin/views/pages/hotels/hotel-details-page/hotel_details_page.dart';
 import 'package:just_travel_admin/views/pages/hotels/hotel-page/components/Trailing.dart';
 import 'package:provider/provider.dart';
+
+import '../../../widgets/network_image_loader.dart';
 
 class HotelsPage extends StatelessWidget {
   static const routeName = '/hotels';
@@ -34,6 +37,7 @@ class HotelsPage extends StatelessWidget {
                 : Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ListView.builder(
+                      reverse: true,
                       itemCount: hotelProvider.hotelList.length,
                       itemBuilder: (context, index) {
                         final hotel = hotelProvider.hotelList[index];
@@ -46,15 +50,24 @@ class HotelsPage extends StatelessWidget {
                           },
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 5),
-                          leading:
-                              hotel.photos != null && hotel.photos!.isNotEmpty
-                                  ? Image.network(
-                                      '${baseUrl}uploads/${hotel.photos![0]}',
-                                      height: 100,
-                                      // width: 100,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset('images/img.png'),
+                          leading: SizedBox(
+                            width: 50,
+                            height: 100,
+                            child:
+                                hotel.photos != null && hotel.photos!.isNotEmpty
+                                    ? NetworkImageLoader(
+                                        image:
+                                            '${baseUrl}uploads/${hotel.photos![0]}',
+                                        width: 50,
+                                        height: 100,
+                                      )
+                                    : Image.asset(
+                                        'images/img.png',
+                                        width: 50,
+                                        height: 100,
+                                      ),
+                          ),
+
                           title: Text(hotel.name!),
                           subtitle: Text(hotel.type!),
                           trailing: Trailing(
@@ -69,6 +82,7 @@ class HotelsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          context.read<DistrictsProvider>().getAllDivision();
           Navigator.pushNamed(context, AddHotelPage.routeName);
         },
         child: const Icon(Icons.add),

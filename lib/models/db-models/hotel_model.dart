@@ -3,7 +3,7 @@ class HotelModel {
     this.id,
     this.name,
     this.type,
-    this.city,
+    this.district,
     this.division,
     this.photos,
     this.description,
@@ -16,14 +16,14 @@ class HotelModel {
 
   @override
   String toString() {
-    return 'HotelModel{id: $id, name: $name, type: $type, city: $city, division: $division, photos: $photos, description: $description, rating: $rating, rooms: $rooms, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
+    return 'HotelModel{id: $id, name: $name, type: $type, district: $district, division: $division, photos: $photos, description: $description, rating: $rating, rooms: $rooms, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
   }
 
   HotelModel.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
     type = json['type'];
-    city = json['city'];
+    district = json['district'];
     division = json['division'];
     photos = json['photos'] != null ? json['photos'].cast<String>() : [];
     description = json['description'];
@@ -36,7 +36,7 @@ class HotelModel {
   String? id;
   String? name;
   String? type;
-  String? city;
+  String? district;
   String? division;
   List<String>? photos;
   String? description;
@@ -49,7 +49,7 @@ class HotelModel {
     String? id,
     String? name,
     String? type,
-    String? city,
+    String? district,
     String? division,
     List<String>? photos,
     String? description,
@@ -63,7 +63,7 @@ class HotelModel {
         id: id ?? this.id,
         name: name ?? this.name,
         type: type ?? this.type,
-        city: city ?? this.city,
+        district: district ?? this.district,
         division: division ?? this.division,
         photos: photos ?? this.photos,
         description: description ?? this.description,
@@ -77,7 +77,7 @@ class HotelModel {
     final map = <String, dynamic>{};
     map['name'] = name;
     map['type'] = type;
-    map['city'] = city;
+    map['district'] = district;
     map['division'] = division;
     map['photos'] = photos;
     map['description'] = description;

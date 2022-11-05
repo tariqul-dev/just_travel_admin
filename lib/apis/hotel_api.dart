@@ -77,21 +77,21 @@ class HotelApi {
     }
   }
 
-  // fetching hotel by hotel city
-  static Future<List<HotelModel>> getHotelByCity(String city) async {
-    var request = Request('GET', Uri.parse('${baseUrl}hotels/city/$city'));
+  // fetching hotel by hotel district
+  static Future<List<HotelModel>> getHotelByDistrict(String district) async {
+    var request =
+    Request('GET', Uri.parse('${baseUrl}hotels/district/$district'));
     StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
-      List<HotelModel> hotelModel = List.generate(
+      List<HotelModel> hotelList = List.generate(
         data.length,
-        (index) => HotelModel.fromJson(data[index]),
+            (index) => HotelModel.fromJson(data[index]),
       );
 
-      print('hotelApi: $hotelModel');
-      return hotelModel;
+      return hotelList;
     } else {
       print(response.reasonPhrase);
       return [];

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../models/db-models/divisions_model.dart';
+import '../../../../../providers/districts_provider.dart';
 
 class DivisionDropDown extends StatelessWidget {
   const DivisionDropDown({Key? key}) : super(key: key);
@@ -13,23 +15,23 @@ class DivisionDropDown extends StatelessWidget {
         const SizedBox(
           width: 30,
         ),
-        Consumer<HotelProvider>(
-          builder: (context, hotelProvider, child) {
-            return hotelProvider.divisionList.isEmpty
+        Consumer<DistrictsProvider>(
+          builder: (context, divisionProvider, child) {
+            return divisionProvider.divisionsList.isEmpty
                 ? const Text('Loading')
-                : DropdownButton<String>(
+                : DropdownButton<DivisionsModel>(
                     hint: const Text('Tap To Select'),
-                    value: hotelProvider.division,
-                    items: hotelProvider.divisionList
+                    value: divisionProvider.division,
+                    items: divisionProvider.divisionsList
                         .map(
-                          (e) => DropdownMenuItem<String>(
+                          (e) => DropdownMenuItem<DivisionsModel>(
                             value: e,
-                            child: Text(e),
+                            child: Text('${e.division}'),
                           ),
                         )
                         .toList(),
                     onChanged: (value) {
-                      hotelProvider.setDivisionFromDropDown(value);
+                      divisionProvider.setDivisionFromDropDown(value);
                     },
                   );
           },

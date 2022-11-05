@@ -7,30 +7,40 @@ class StatusDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: Consumer<HotelProvider>(builder: (context, provider, child) {
-        return DropdownButtonFormField<String>(
-          hint: const Text('Status'),
-          isExpanded: true,
-          icon: const Icon(Icons.arrow_drop_down),
-          value: provider.selectedHotelType,
-          items: provider.hotelTypeList
-              .map(
-                (hotelType) => DropdownMenuItem<String>(
-                  value: hotelType,
-                  child: Text(hotelType),
-                ),
-              )
-              .toList(),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please select hotel type';
-            }
-            return null;
-          },
-          onChanged: provider.setSelectedHotelType,
-        );
-      }),
+    return Row(
+      children: [
+        const Expanded(
+          child: Text('Hotel Status'),
+        ),
+        Expanded(
+          flex: 2,
+          child: DropdownButtonHideUnderline(
+            child: Consumer<HotelProvider>(builder: (context, provider, child) {
+              return DropdownButtonFormField<String>(
+                hint: const Text('Status'),
+                isExpanded: true,
+                icon: const Icon(Icons.arrow_drop_down),
+                value: provider.selectedHotelType,
+                items: provider.hotelTypeList
+                    .map(
+                      (hotelType) => DropdownMenuItem<String>(
+                        value: hotelType,
+                        child: Text(hotelType),
+                      ),
+                    )
+                    .toList(),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select hotel type';
+                  }
+                  return null;
+                },
+                onChanged: provider.setSelectedHotelType,
+              );
+            }),
+          ),
+        ),
+      ],
     );
   }
 }

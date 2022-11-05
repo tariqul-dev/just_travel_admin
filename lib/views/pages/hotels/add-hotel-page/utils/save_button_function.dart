@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 saveButtonFunction(
   BuildContext context, {
   required String hotelName,
-  required String city,
+  required String district,
   required String division,
   required String description,
   required List<RoomModel> rooms,
@@ -16,14 +16,14 @@ saveButtonFunction(
   try {
     bool value = await context.read<HotelProvider>().saveHotel(
           hotelName: hotelName,
-          city: city,
+          district: district,
           division: division,
           description: description,
           rooms: rooms,
         );
 
-    Navigator.pop(context);
     if (value) {
+      Navigator.pop(context);
       showMsg(context, 'Hotel Inserted Successfully');
       reset(context);
     } else {
@@ -32,6 +32,8 @@ saveButtonFunction(
   } catch (error) {
     showMsg(context, 'Failed To Create Hotel');
     print('Error creating hotel: $error');
+    Navigator.pop(context);
+  } finally {
     Navigator.pop(context);
   }
 }

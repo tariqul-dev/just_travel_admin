@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel_admin/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../providers/trip_provider.dart';
 
 tripImagePickerDialog(BuildContext context, {int index = -1}) {
   return showDialog(

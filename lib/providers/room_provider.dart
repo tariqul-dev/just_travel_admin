@@ -4,7 +4,6 @@ import 'package:just_travel_admin/apis/room_api.dart';
 import 'package:just_travel_admin/models/db-models/room_model.dart';
 
 import '../apis/image_upload_api.dart';
-import '../models/db-models/hotel_model.dart';
 import '../models/db-models/image_upload_model.dart';
 
 class RoomProvider extends ChangeNotifier {
@@ -14,7 +13,10 @@ class RoomProvider extends ChangeNotifier {
   String? roomImagePath;
   XFile? roomImageFile;
   RoomModel? room;
+  num numberOfTravellers = 1;
 
+  String? selectedRoomStatusGroupValue;
+  String? selectedRoomStatus;
 /*
   * Image picking section start*/
   Future<void> roomPickImage(bool isCamera, {required int index}) async {
@@ -44,11 +46,26 @@ class RoomProvider extends ChangeNotifier {
   /*
   * Image picking section end*/
 
-  reset() {
+
+
+  void setRoomStatus(String value) {
+    selectedRoomStatusGroupValue = value;
+    notifyListeners();
+  }
+
+  void setNumberOfPeople(num value) {
+    numberOfTravellers = value;
+    notifyListeners();
+  }
+  void reset() {
+    numberOfTravellers = 1;
+    selectedRoomStatusGroupValue = null;
+    room = null;
     roomList = [];
     roomImageList = [];
     notifyListeners();
   }
+
 
   resetImageList() {
     roomImageList = [];
@@ -63,7 +80,24 @@ class RoomProvider extends ChangeNotifier {
 
 /*
   *============================ Room api calling section ============================*/
-//  create room
+//  add room
+  Future<bool> addRoom(RoomModel room) async {
+    try {
+      RoomModel? createdRoom = await RoomApi.addRoom(room);
+
+      if (createdRoom != null) {
+        roomList.add(createdRoom);
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      print('room creating error: $error');
+      return false;
+    }
+  }
+
+  //  create room
   Future<bool> createRoom(RoomModel room) async {
     try {
       RoomModel? createdRoom = await RoomApi.createRoom(room);
@@ -85,7 +119,6 @@ class RoomProvider extends ChangeNotifier {
 
 // get rooms by hotel id
   Future<List<RoomModel>?> getRoomsByHotelId(String hotelId) async {
-    print('getting rooms by hotel id');
     try {
       roomList = await RoomApi.getRoomsByHotelId(hotelId);
       notifyListeners();

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel_admin/models/db-models/hotel_model.dart';
-import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../models/db-models/hotel_model.dart';
+import '../../../../../providers/hotel_provider.dart';
 
 Future<void> hotelSelectDialog(BuildContext context) => showDialog(
       context: context,
@@ -9,7 +10,7 @@ Future<void> hotelSelectDialog(BuildContext context) => showDialog(
         title: const Text('Select Hotel'),
         content: Consumer<HotelProvider>(
           builder: (context, provider, child) {
-            return provider.hotelsByCity.isEmpty
+            return provider.hotelsByDistrict.isEmpty
                 ? const Text('No hotel found in this city')
                 : DropdownButtonHideUnderline(
                     child: DropdownButtonFormField<HotelModel>(
@@ -17,7 +18,7 @@ Future<void> hotelSelectDialog(BuildContext context) => showDialog(
                       isExpanded: true,
                       icon: const Icon(Icons.arrow_drop_down),
                       value: provider.hotelModel,
-                      items: provider.hotelsByCity
+                      items: provider.hotelsByDistrict
                           .map(
                             (hotel) => DropdownMenuItem<HotelModel>(
                               value: hotel,

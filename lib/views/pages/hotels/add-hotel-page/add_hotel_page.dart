@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel_admin/providers/districts_provider.dart';
 import 'package:just_travel_admin/providers/hotel_provider.dart';
 import 'package:just_travel_admin/providers/room_provider.dart';
 import 'package:just_travel_admin/utils/helper_functions.dart';
@@ -8,25 +9,24 @@ import 'package:just_travel_admin/views/pages/hotels/add-hotel-page/components/s
 import 'package:just_travel_admin/views/pages/hotels/add-hotel-page/dialog/add_room_dialog.dart';
 import 'package:just_travel_admin/views/pages/hotels/add-hotel-page/utils/save_button_function.dart';
 import 'package:just_travel_admin/views/widgets/custom_form_field.dart';
+import 'package:just_travel_admin/views/widgets/district_dropdown.dart';
+import 'package:just_travel_admin/views/widgets/division_dropdown.dart';
 import 'package:just_travel_admin/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 class AddHotelPage extends StatelessWidget {
   static const routeName = '/add_hotel';
   final hotelNameTextController = TextEditingController();
-  final hotelCityTextController = TextEditingController();
-  final hotelDivisionTextController = TextEditingController();
   final hotelDescriptionTextController = TextEditingController();
   final globalKey = GlobalKey<FormState>();
 
   AddHotelPage({Key? key}) : super(key: key);
-  
-  Future<bool> reset(BuildContext context) async{
+
+  Future<bool> reset(BuildContext context) async {
     hotelNameTextController.clear();
-    hotelCityTextController.clear();
-    hotelDivisionTextController.clear();
     hotelDescriptionTextController.clear();
     context.read<HotelProvider>().reset();
+    context.read<DistrictsProvider>().reset();
     context.read<RoomProvider>().reset();
     return true;
   }
@@ -37,18 +37,19 @@ class AddHotelPage extends StatelessWidget {
       onWillPop: () => reset(context),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Hotel'),
+          title: const Text('Create Hotel'),
           actions: [
             TextButton(
               onPressed: () async {
                 if (globalKey.currentState!.validate() &&
                     context.read<HotelProvider>().hotelImageList.isNotEmpty) {
+                  final disProvider = context.read<DistrictsProvider>();
                   showLoadingDialog(context);
                   saveButtonFunction(
                     context,
                     hotelName: hotelNameTextController.text,
-                    city: hotelCityTextController.text,
-                    division: hotelDivisionTextController.text,
+                    district: disProvider.district!.district!,
+                    division: disProvider.division!.division!,
                     description: hotelDescriptionTextController.text,
                     rooms: context.read<RoomProvider>().roomList,
                     reset: reset,
@@ -80,32 +81,19 @@ class AddHotelPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: CustomFormField(
-                      controller: hotelCityTextController,
-                      isPrefIcon: false,
-                      labelText: 'City',
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  const Expanded(
-                    child: StatusDropdown(),
-                  ),
-                ],
-              ),
+              const DivisionDropDown(),
+
               const SizedBox(
                 height: 10,
               ),
-              CustomFormField(
-                controller: hotelDivisionTextController,
-                isPrefIcon: false,
-                labelText: 'Division',
+
+              const DistrictDropDown(),
+              const SizedBox(
+                height: 10,
               ),
+
+              const StatusDropdown(),
+
               const SizedBox(
                 height: 10,
               ),

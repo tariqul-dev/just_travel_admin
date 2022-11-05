@@ -10,6 +10,9 @@ import 'package:just_travel_admin/views/widgets/dialogs/confirm_dialog.dart';
 import 'package:just_travel_admin/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../providers/districts_provider.dart';
+import '../../../widgets/network_image_loader.dart';
+
 class TripsPage extends StatelessWidget {
   static const routeName = '/trips';
 
@@ -36,6 +39,7 @@ class TripsPage extends StatelessWidget {
             return tripList.isEmpty
                 ? const Text('No Trip added')
                 : ListView.builder(
+                    reverse: true,
                     itemCount: tripList.length,
                     itemBuilder: (context, index) {
                       TripModel trip = tripList[index];
@@ -46,14 +50,21 @@ class TripsPage extends StatelessWidget {
                               arguments: trip.id);
                         },
                         contentPadding: const EdgeInsets.symmetric(vertical: 5),
-                        leading: trip.photos != null && trip.photos!.isNotEmpty
-                            ? Image.network(
-                                '${baseUrl}uploads/${trip.photos![0]}',
-                                height: 100,
-                                // width: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset('images/img.png'),
+                        leading: SizedBox(
+                          width: 50,
+                          height: 100,
+                          child: trip.photos != null && trip.photos!.isNotEmpty
+                              ? NetworkImageLoader(
+                                  image: '${baseUrl}uploads/${trip.photos![0]}',
+                                  width: 50,
+                                  height: 100,
+                                )
+                              : Image.asset(
+                                  'images/img.png',
+                                  width: 50,
+                                  height: 100,
+                                ),
+                        ),
                         title: Text(trip.placeName!),
                         subtitle: Text(
                             getFormattedDateTime(dateTime: trip.startDate!)),
@@ -106,9 +117,9 @@ class TripsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await context.read<HotelProvider>().getAllHotels();
-          context.read<HotelProvider>().getCityList();
+        onPressed: () {
+          context.read<DistrictsProvider>().getAllDivision();
+          Navigator.pushNamed(context, AddTripsPage.routeName);
 
           Navigator.pushNamed(context, AddTripsPage.routeName);
         },
