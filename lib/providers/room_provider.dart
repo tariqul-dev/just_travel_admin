@@ -17,6 +17,26 @@ class RoomProvider extends ChangeNotifier {
 
   String? selectedRoomStatusGroupValue;
   String? selectedRoomStatus;
+
+  bool isRoomSelected = false;
+
+
+
+  // void reset() {
+  //   numberOfTravellers = 1;
+  //   isRoomSelected = false;
+  //   selectedRoomStatusGroupValue = null;
+  //   room = null;
+  //   roomList = [];
+  //   notifyListeners();
+  // }
+
+
+
+
+
+
+
 /*
   * Image picking section start*/
   Future<void> roomPickImage(bool isCamera, {required int index}) async {
@@ -46,7 +66,10 @@ class RoomProvider extends ChangeNotifier {
   /*
   * Image picking section end*/
 
-
+  void setRoomSelectedStatus(bool status) {
+    isRoomSelected = status;
+    notifyListeners();
+  }
 
   void setRoomStatus(String value) {
     selectedRoomStatusGroupValue = value;
@@ -129,11 +152,10 @@ class RoomProvider extends ChangeNotifier {
     }
   }
 
-  // get rooms by hotel id
-  Future<RoomModel?> getRoomsById(String id) async {
-    print('getting rooms by hotel id');
+  // get rooms by room id
+  Future<RoomModel?> getHotelByRoomId(String id) async {
     try {
-      room = await RoomApi.getHotelById(id);
+      room = await RoomApi.getHotelByRoomId(id);
       notifyListeners();
       return room;
     } catch (e) {
@@ -141,4 +163,35 @@ class RoomProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  // get rooms by room id
+  Future<RoomModel?> getRoomsByRoomId(String id) async {
+    try {
+      room = await RoomApi.getRoomByRoomId(id);
+      notifyListeners();
+      return room;
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
+  // get rooms by hotelId status anc capacity
+  Future<void> getRoomsByHotelIdStatusCapacity(String hotelId) async {
+    try {
+      if (selectedRoomStatusGroupValue != null) {
+        roomList = await RoomApi.getRoomsByHotelIdStatusCapacity(
+            hotelId, selectedRoomStatusGroupValue!, numberOfTravellers);
+        notifyListeners();
+      } else {
+        throw 'Room status not selected';
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+
+
+
 }

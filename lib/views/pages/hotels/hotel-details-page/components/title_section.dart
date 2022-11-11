@@ -24,10 +24,10 @@ class TitleSection extends StatelessWidget {
             fontSize: 13,
           ),
         ),
-        trailing: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.edit),
-        ),
+        // trailing: IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(Icons.edit),
+        // ),
       ),
     );
   }

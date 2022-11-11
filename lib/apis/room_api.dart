@@ -90,7 +90,23 @@ class RoomApi {
   }
 
   // fetching room by room id
-  static Future<RoomModel?> getHotelById(String roomId) async {
+  static Future<RoomModel?> getRoomByRoomId(String roomId) async {
+    var request = Request('GET', Uri.parse('${baseUrl}rooms/$roomId'));
+    StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var enCodedDate = await response.stream.bytesToString();
+      var data = json.decode(enCodedDate);
+      RoomModel room = RoomModel.fromJson(data);
+      return room;
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
+  // fetching room by room id
+  static Future<RoomModel?> getHotelByRoomId(String roomId) async {
     var request = Request('GET', Uri.parse('${baseUrl}rooms/$roomId'));
     StreamedResponse response = await request.send();
 
@@ -103,6 +119,28 @@ class RoomApi {
     } else {
       print(response.reasonPhrase);
       return null;
+    }
+  }
+
+  // fetch room by hotel id, status and capacity
+  static Future<List<RoomModel>> getRoomsByHotelIdStatusCapacity(String hotelId, String status, num  capacity) async {
+    var request = Request('GET', Uri.parse('${baseUrl}rooms/multi/$hotelId/$status/$capacity'));
+
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+        List<RoomModel> rooms = List.generate(decodedData.length, (index) => RoomModel.fromJson(decodedData[index]),);
+        return rooms;
+      } else {
+        print(response.reasonPhrase);
+        throw Error();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return [];
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/providers/room_provider.dart';
 import 'package:just_travel_admin/views/pages/hotels/hotel-details-page/components/room_tiles.dart';
@@ -45,8 +46,15 @@ class HotelDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Text('About'),
-                          Text(hotel.name!),
+                          Text('About', style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontSize: 14
+                          ),),
+                          ExpandableText(
+                            hotel.description!, expandText: 'Read More',
+                            collapseText: 'Read less',
+                            maxLines: 3,
+
+                          ),
                         ],
                       ),
                     ),

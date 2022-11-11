@@ -95,12 +95,8 @@ RoomModel copyWith({  String? title,
     map['roomNumber'] = roomNumber;
     map['checkIn'] = checkIn;
     map['checkOut'] = checkOut;
-    map['isAvailable'] = isAvailable;
     map['hotel'] = hotel;
     map['users'] = users;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    map['__v'] = v;
     return map;
   }
 

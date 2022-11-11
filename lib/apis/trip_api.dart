@@ -5,6 +5,9 @@ import '../models/db-models/trip_model.dart';
 import '../utils/constants/urls.dart';
 
 class TripApi {
+  /*
+  * ================== Insert ======================
+  * */
   // requesting create hotel to api
   static Future<bool> createTrip(TripModel tripModel) async {
     var headers = {'Content-Type': 'application/json'};
@@ -25,6 +28,14 @@ class TripApi {
       return false;
     }
   }
+
+
+  /*
+  * ================== update ======================
+  * */
+
+
+
 
   /*
   * ========== query ==========*/
@@ -51,7 +62,7 @@ class TripApi {
   }
 
   // fetching trip by trip id
-  static Future<TripModel?> getTripById(String tripId) async {
+  static Future<TripModel?> getTripByTripId(String tripId) async {
     var request = Request('GET', Uri.parse('${baseUrl}trips/$tripId'));
     StreamedResponse response = await request.send();
 
@@ -85,6 +96,30 @@ class TripApi {
     } else {
       print(response.reasonPhrase);
       return [];
+    }
+  }
+
+  // fetching trip by userId tripId
+  static Future<TripModel?> getTripByUserIdTripId(
+      String userId, String tripId) async {
+    var request = Request('GET', Uri.parse('${baseUrl}join/$userId/$tripId'));
+
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+        TripModel trip = TripModel.fromJson(decodedData[0]['tripId']);
+        // print('trip found');
+        return trip;
+      } else {
+        print(response.reasonPhrase);
+        throw Error();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return null;
     }
   }
 }

@@ -16,14 +16,15 @@ class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
   TripModel? tripModel;
   List<TripModel> hostTripList = [];
+  // List<String> popUpItems = ['Requested Trips', 'Canceled Tips'];
+  // String? selectedPopUpItem;
 
   // on init
-  void onInit(){
+  void onInit() {
     getAllTrips();
   }
 
-
-  void reset(){
+  void reset() {
     tripImageList = [];
     tripStartDate = null;
     tripEndDate = null;
@@ -33,18 +34,25 @@ class TripProvider extends ChangeNotifier {
   }
 
   void setTripStartDate(DateTime? dateTime) {
-    print('date selected provider: $dateTime');
     tripStartDate = dateTime;
-    print('sele: $tripStartDate');
+    if (tripEndDate != null) {
+      if (tripStartDate?.compareTo(tripEndDate!) != -1) {
+        tripEndDate = null;
+      }
+    }
+
     notifyListeners();
   }
 
   void setTripEndDate(DateTime? dateTime) {
-    print('date selected provider: $dateTime');
     tripEndDate = dateTime;
-    print('sele: $tripEndDate');
     notifyListeners();
   }
+
+  // void setSelectedPopUpItem(String value){
+  //   selectedPopUpItem = value;
+  //   notifyListeners();
+  // }
 
   /*
   * Image picking section start*/
@@ -78,7 +86,7 @@ class TripProvider extends ChangeNotifier {
 
   /*
   * ============= insert trip ============*/
-//create hotel
+//create trip
   Future<bool> saveTrip({
     required String placeName,
     required String district,
@@ -86,7 +94,8 @@ class TripProvider extends ChangeNotifier {
     required String description,
     required String hotelId,
     required num cost,
-    required num travellers, required,
+    required num travellers,
+    required,
   }) async {
     final TripModel tripModel = TripModel(
       placeName: placeName,
@@ -99,7 +108,6 @@ class TripProvider extends ChangeNotifier {
       travellers: travellers,
       cost: cost,
       hotel: hotelId,
-
     );
     bool isCreated = true;
     await TripApi.createTrip(tripModel);
@@ -111,7 +119,7 @@ class TripProvider extends ChangeNotifier {
 
 /*
   * ============= query ============*/
-  // get all hotels
+  // get all trips
   Future<List<TripModel>> getAllTrips() async {
     print('getAllHotels');
     try {
@@ -125,21 +133,27 @@ class TripProvider extends ChangeNotifier {
   }
 
   // get trip by id
-  Future<TripModel?> getTripById(String tripId) async {
-    tripModel = await TripApi.getTripById(tripId);
+  Future<TripModel?> getTripByTripId(String tripId) async {
+    tripModel = await TripApi.getTripByTripId(tripId);
     notifyListeners();
     return tripModel;
   }
 
 // get trips host
-Future<List<TripModel>> getTripsByHost(String host) async {
-  try {
-    hostTripList = await TripApi.getTripsByHost(host);
-    notifyListeners();
-    return hostTripList;
-  } catch (e) {
-    print('Error: $e');
-    return hostTripList;
+  Future<List<TripModel>> getTripsByHost(String host) async {
+    try {
+      hostTripList = await TripApi.getTripsByHost(host);
+      notifyListeners();
+      return hostTripList;
+    } catch (e) {
+      print('Error: $e');
+      return hostTripList;
+    }
   }
-}
+
+// fetching trip by userId tripId
+  Future<bool> getTripByUserIdTripId(String userId, String tripId) async {
+    TripModel? trip = await TripApi.getTripByUserIdTripId(userId, tripId);
+    return trip?.placeName != null;
+  }
 }

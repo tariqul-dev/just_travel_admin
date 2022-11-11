@@ -111,14 +111,10 @@ TripModel copyWith({  String? host,
     map['photos'] = photos;
     map['travellers'] = travellers;
     map['joinedPersons'] = joinedPersons;
-    map['status'] = status;
     map['cost'] = cost;
     map['users'] = users;
     map['hotel'] = hotel;
     map['rooms'] = rooms;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    map['__v'] = v;
     return map;
   }
 

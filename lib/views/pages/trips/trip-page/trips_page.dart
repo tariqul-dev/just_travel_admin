@@ -39,76 +39,98 @@ class TripsPage extends StatelessWidget {
             return tripList.isEmpty
                 ? const Text('No Trip added')
                 : ListView.builder(
-                    reverse: true,
                     itemCount: tripList.length,
                     itemBuilder: (context, index) {
                       TripModel trip = tripList[index];
-                      return ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, TripDetailsPage.routeName,
-                              arguments: trip.id);
-                        },
-                        contentPadding: const EdgeInsets.symmetric(vertical: 5),
-                        leading: SizedBox(
-                          width: 50,
-                          height: 100,
-                          child: trip.photos != null && trip.photos!.isNotEmpty
-                              ? NetworkImageLoader(
-                                  image: '${baseUrl}uploads/${trip.photos![0]}',
-                                  width: 50,
-                                  height: 100,
-                                )
-                              : Image.asset(
-                                  'images/img.png',
-                                  width: 50,
-                                  height: 100,
-                                ),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
                         ),
-                        title: Text(trip.placeName!),
-                        subtitle: Text(
-                            getFormattedDateTime(dateTime: trip.startDate!)),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // edit button
-                            IconButton(
-                              onPressed: () {
-                                // Navigator.pushNamed(
-                                //     context, AddHotelPage.routeName,
-                                //     arguments: hotel);
-                              },
-                              icon: const Icon(Icons.edit),
-                            ),
-
-                            //delete button
-                            IconButton(
-                              onPressed: () {
-                                confirmDialog(
-                                  context,
-                                  'Delete',
-                                  (isConfirmed) {
-                                    if (isConfirmed) {
-                                      showLoadingDialog(context);
-                                      // hotelProvider
-                                      //     .deleteHotelById(hotel.id!)
-                                      //     .then(
-                                      // (value) => Navigator.pop(context),
-                                      // )
-                                      //     .onError(
-                                      // (error, stackTrace) => showMsg(
-                                      // context, error.toString()),
-                                      // );
-                                    }
-                                  },
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, TripDetailsPage.routeName,
+                                arguments: trip.id);
+                          },
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 5),
+                          leading: SizedBox(
+                            width: 50,
+                            height: 100,
+                            child:
+                                trip.photos != null && trip.photos!.isNotEmpty
+                                    ? NetworkImageLoader(
+                                        image:
+                                            '${baseUrl}uploads/${trip.photos![0]}',
+                                        width: 50,
+                                        height: 100,
+                                      )
+                                    : Image.asset(
+                                        'images/img.png',
+                                        width: 50,
+                                        height: 100,
+                                      ),
+                          ),
+                          title: Text(trip.placeName!),
+                          subtitle: Row(
+                            children: [
+                              Text(
+                                getFormattedDateTime(
+                                    dateTime: trip.startDate!,
+                                    pattern: 'MMM dd yyyy'),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                getFormattedDateTime(
+                                    dateTime: trip.endDate!,
+                                    pattern: 'MMM dd yyyy'),
+                              ),
+                            ],
+                          ),
+                          // trailing: Row(
+                          //   mainAxisSize: MainAxisSize.min,
+                          //   children: [
+                          //     // edit button
+                          //     IconButton(
+                          //       onPressed: () {
+                          //         // Navigator.pushNamed(
+                          //         //     context, AddHotelPage.routeName,
+                          //         //     arguments: hotel);
+                          //       },
+                          //       icon: const Icon(Icons.edit),
+                          //     ),
+                          //
+                          //     //delete button
+                          //     IconButton(
+                          //       onPressed: () {
+                          //         confirmDialog(
+                          //           context,
+                          //           'Delete',
+                          //           (isConfirmed) {
+                          //             if (isConfirmed) {
+                          //               showLoadingDialog(context);
+                          //               // hotelProvider
+                          //               //     .deleteHotelById(hotel.id!)
+                          //               //     .then(
+                          //               // (value) => Navigator.pop(context),
+                          //               // )
+                          //               //     .onError(
+                          //               // (error, stackTrace) => showMsg(
+                          //               // context, error.toString()),
+                          //               // );
+                          //             }
+                          //           },
+                          //         );
+                          //       },
+                          //       icon: const Icon(
+                          //         Icons.delete,
+                          //         color: Colors.red,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
                       );
                     },

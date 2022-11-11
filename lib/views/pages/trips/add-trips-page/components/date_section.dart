@@ -72,13 +72,22 @@ class DateSection extends StatelessWidget {
                       datePicker(
                         context: context,
                         initialDate:
-                            DateTime.now().add(const Duration(days: 4)),
-                        firstDate: DateTime.now().add(const Duration(days: 4)),
+                            context.read<TripProvider>().tripStartDate != null
+                                ? context
+                                    .read<TripProvider>()
+                                    .tripStartDate!
+                                    .add(const Duration(days: 1))
+                                : DateTime.now().add(const Duration(days: 1)),
+                        firstDate:
+                            context.read<TripProvider>().tripStartDate != null
+                                ? context
+                                    .read<TripProvider>()
+                                    .tripStartDate!
+                                    .add(const Duration(days: 1))
+                                : DateTime.now().add(const Duration(days: 1)),
                         lastDate: DateTime(3030),
                         onSelect: (dateTime) {
-                          context
-                              .read<TripProvider>()
-                              .setTripEndDate(dateTime);
+                          context.read<TripProvider>().setTripEndDate(dateTime);
                         },
                       );
                     },

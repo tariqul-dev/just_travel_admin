@@ -13,7 +13,6 @@ import 'room_image_picker_dialog.dart';
 
 addRoomDialog(BuildContext context, {int index = -1}) {
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController statusController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -23,7 +22,6 @@ addRoomDialog(BuildContext context, {int index = -1}) {
 
   void reset() {
     titleController.clear();
-    statusController.clear();
     maxCapacityController.clear();
     descriptionController.clear();
     priceController.clear();
@@ -67,11 +65,51 @@ addRoomDialog(BuildContext context, {int index = -1}) {
                     width: 10,
                   ),
                   Expanded(
-                    child: CustomFormField(
-                      controller: statusController,
-                      isPrefIcon: false,
-                      labelText: 'Status',
+                    child:  Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Room Status',
+                          style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Consumer<RoomProvider>(
+                              builder: (context, roomProvider, child) => Radio<String>(
+                                value: 'ac',
+                                groupValue: roomProvider.selectedRoomStatusGroupValue,
+                                onChanged: (value) {
+                                  roomProvider.setRoomStatus(value!);
+                                },
+                              ),
+                            ),
+                            const Text('AC'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Consumer<RoomProvider>(
+                              builder: (context, roomProvider, child) => Radio<String>(
+                                value: 'non ac',
+                                groupValue: roomProvider.selectedRoomStatusGroupValue,
+                                onChanged: (value) {
+                                  roomProvider.setRoomStatus(value!);
+                                },
+                              ),
+                            ),
+                            const Text('Non AC'),
+                          ],
+                        ),
+                      ],
                     ),
+                    // child: CustomFormField(
+                    //   controller: statusController,
+                    //   isPrefIcon: false,
+                    //   labelText: 'Status',
+                    // ),
                   ),
                 ],
               ),
@@ -177,7 +215,7 @@ addRoomDialog(BuildContext context, {int index = -1}) {
               RoomModel roomModel = RoomModel(
                 title: titleController.text.trim(),
                 maxCapacity: int.parse(maxCapacityController.text.trim()),
-                status: statusController.text.trim(),
+                status: context.read<RoomProvider>().selectedRoomStatusGroupValue,
                 description: descriptionController.text.trim(),
                 roomNumber: roomNumberController.text.trim(),
                 price: double.parse(priceController.text.trim()),

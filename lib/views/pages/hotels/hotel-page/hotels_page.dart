@@ -37,7 +37,8 @@ class HotelsPage extends StatelessWidget {
                 : Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ListView.builder(
-                      reverse: true,
+                      // reverse: true,
+
                       itemCount: hotelProvider.hotelList.length,
                       itemBuilder: (context, index) {
                         final hotel = hotelProvider.hotelList[index];
@@ -70,9 +71,9 @@ class HotelsPage extends StatelessWidget {
 
                           title: Text(hotel.name!),
                           subtitle: Text(hotel.type!),
-                          trailing: Trailing(
-                            hotelId: hotel.id!,
-                          ),
+                          // trailing: Trailing(
+                          //   hotelId: hotel.id!,
+                          // ),
                         );
                       },
                     ),

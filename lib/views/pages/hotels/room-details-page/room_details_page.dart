@@ -22,7 +22,7 @@ class RoomDetailsPage extends StatelessWidget {
         title: const Text('Room Details'),
       ),
       body: FutureBuilder<RoomModel?>(
-        future: context.read<RoomProvider>().getRoomsById(roomId),
+        future: context.read<RoomProvider>().getRoomsByRoomId(roomId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('Error');

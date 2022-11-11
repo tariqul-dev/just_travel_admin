@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/models/ui/dashboard_item_model.dart';
 import 'package:just_travel_admin/views/pages/hotels/hotel-page/hotels_page.dart';
-import 'package:just_travel_admin/views/pages/offers/offers_page.dart';
+import 'package:just_travel_admin/views/pages/payments/payments_page.dart';
 import 'package:just_travel_admin/views/pages/reports/report_page.dart';
+import 'package:just_travel_admin/views/pages/requested_trips/requested_trips_page.dart';
 import 'package:just_travel_admin/views/pages/settings/settings_page.dart';
 import 'package:just_travel_admin/views/pages/trips/trip-page/trips_page.dart';
 import 'package:just_travel_admin/views/pages/users/users_page.dart';
@@ -47,20 +48,24 @@ class DashBoardPage extends StatelessWidget {
         route = HotelsPage.routeName;
         break;
 
-      case DashboardItem.offers:
-        route = OffersPage.routeName;
+      case DashboardItem.reqTrips:
+        route = RequestedTripsPage.routeName;
         break;
 
       case DashboardItem.users:
         route = UsersPage.routeName;
         break;
 
-      case DashboardItem.setting:
-        route = SettingsPage.routeName;
-        break;
+      // case DashboardItem.setting:
+      //   route = SettingsPage.routeName;
+      //   break;
 
-      case DashboardItem.report:
-        route = ReportsPage.routeName;
+      // case DashboardItem.report:
+      //   route = ReportsPage.routeName;
+      //   break;
+
+        case DashboardItem.payments:
+        route = PaymentsPage.routeName;
         break;
     }
 
