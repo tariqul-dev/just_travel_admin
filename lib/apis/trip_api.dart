@@ -29,21 +29,37 @@ class TripApi {
     }
   }
 
-
   /*
   * ================== update ======================
   * */
 
-
-
-
   /*
   * ========== query ==========*/
+  // fetch all trips
   static Future<List<TripModel>> getAllTrips() async {
-    print('in api trip');
     var request = Request('GET', Uri.parse('${baseUrl}trips'));
     StreamedResponse response = await request.send();
-    print('in api trip');
+    if (response.statusCode == 200) {
+      var enCodedDate = await response.stream.bytesToString();
+      var data = json.decode(enCodedDate);
+
+      List<TripModel> tripModels = List.generate(
+        data.length,
+        (index) => TripModel.fromJson(data[index]),
+      );
+      return tripModels;
+    } else {
+      print(response.reasonPhrase);
+      return [];
+    }
+  }
+
+  //fetch notifiable trips
+  static Future<List<TripModel>> getNotifiableTrips() async {
+    var request =
+        Request('GET', Uri.parse('${baseUrl}trips/notify/notifiable/trips'));
+    StreamedResponse response = await request.send();
+    // print('in api trip');
     if (response.statusCode == 200) {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
@@ -53,7 +69,6 @@ class TripApi {
         (index) => TripModel.fromJson(data[index]),
       );
 
-      print(tripModels);
       return tripModels;
     } else {
       print(response.reasonPhrase);
@@ -70,7 +85,6 @@ class TripApi {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
       TripModel trip = TripModel.fromJson(data);
-      print('tripApi: $trip');
       return trip;
     } else {
       print(response.reasonPhrase);
@@ -89,7 +103,7 @@ class TripApi {
 
       List<TripModel> tripModels = List.generate(
         data.length,
-            (index) => TripModel.fromJson(data[index]),
+        (index) => TripModel.fromJson(data[index]),
       );
 
       return tripModels;
@@ -120,6 +134,28 @@ class TripApi {
     } catch (e) {
       print('failed because: $e');
       return null;
+    }
+  }
+
+  // notify users by trip id
+  static Future<bool> notifyUsersByTripId(
+    String tripId,
+    String message,
+  ) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request =
+        Request('POST', Uri.parse('${baseUrl}join/notify/$tripId'));
+    request.body = json.encode({"message": message});
+    request.headers.addAll(headers);
+
+    StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
     }
   }
 }

@@ -27,8 +27,8 @@ class AuthService {
       password: password,
     );
     print('credential: $userCredential');
-    return userCredential.user != null;
-    // return AuthDB.isAdmin(userCredential.user!.uid);
+    // return userCredential.user != null;
+    return AuthService.isAdmin(userCredential.user!.uid);
   }
 
   static Future<void> signOut() => _auth.signOut();

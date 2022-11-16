@@ -9,6 +9,7 @@ class AuthProvider extends ChangeNotifier {
   String? email;
   String? password;
   String errorMessage = '';
+  bool isSignOut = false;
 
   // change visibility of password
   void changeVisibility() {
@@ -34,17 +35,17 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // signing in admin
-  Future<void> _signIn() async {
-    try {
-      bool isSuccess = await AuthService.signIn(email!, password!);
-      if (isSuccess) {
-        return;
-      }
-    } on FirebaseAuthException catch (e) {
-      rethrow;
-    }
-  }
+  // // signing in admin
+  // Future<void> _signIn() async {
+  //   try {
+  //     bool isSuccess = await AuthService.signIn(email!, password!);
+  //     if (isSuccess) {
+  //       return;
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   // authenticating admin
   Future<void> authenticate() async {
@@ -62,4 +63,15 @@ class AuthProvider extends ChangeNotifier {
 
   // this method will return current user info
   User? getCurrentUser() => AuthService.user;
+
+  // sign out
+  Future<void> signOut() async {
+    try {
+      await AuthService.signOut();
+      isSignOut = true;
+      notifyListeners();
+    } catch (error) {
+      print('error sign out: $error');
+    }
+  }
 }

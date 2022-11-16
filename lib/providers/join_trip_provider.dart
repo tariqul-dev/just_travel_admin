@@ -65,8 +65,11 @@ class JoinTripProvider extends ChangeNotifier {
     if (map.isNotEmpty) {
       joinedUserList = map['users'];
       numberOfTravelerList = map['numberOfTravellers'];
-      notifyListeners();
+    }else{
+      numberOfTravelerList = [];
+      joinedUserList = [];
     }
+    notifyListeners();
   }
 
   // count users in a trip by trip id

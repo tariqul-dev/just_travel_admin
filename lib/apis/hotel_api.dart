@@ -14,7 +14,7 @@ class HotelApi {
     try {
       StreamedResponse response = await request.send();
       if (response.statusCode == 201) {
-        print('inserted: ${await response.stream.bytesToString()}');
+        // print('inserted: ${await response.stream.bytesToString()}');
         return true;
       } else {
         print('failed because: ${response.reasonPhrase}');
@@ -69,7 +69,6 @@ class HotelApi {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
       HotelModel hotel = HotelModel.fromJson(data);
-      print('hotelApi: $hotel');
       return hotel;
     } else {
       print(response.reasonPhrase);

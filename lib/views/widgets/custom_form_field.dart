@@ -54,6 +54,7 @@ class CustomFormField extends StatelessWidget {
           }
           return null;
         },
+        textCapitalization: TextCapitalization.sentences,
         onEditingComplete: onEditingComplete,
       ),
     );

@@ -68,12 +68,13 @@ class JoinTripApi {
       if (response.statusCode == 200) {
         var encodedData = await response.stream.bytesToString();
         var decodedData = jsonDecode(encodedData);
+
         List<UserModel> users = List.generate(decodedData.length,
-            (index) => UserModel.fromJson(decodedData[0]['userId']));
+            (index) => UserModel.fromJson(decodedData[index]['userId']));
 
         List<num> numberOfTravelers = List.generate(decodedData.length,
             (index) => decodedData[index]['numberOfTravellers']);
-        // print('trip found');
+
         return {
           'users': users,
           'numberOfTravellers': numberOfTravelers,

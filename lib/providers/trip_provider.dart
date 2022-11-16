@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 import '../apis/image_upload_api.dart';
 import '../apis/trip_api.dart';
@@ -16,8 +15,7 @@ class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
   TripModel? tripModel;
   List<TripModel> hostTripList = [];
-  // List<String> popUpItems = ['Requested Trips', 'Canceled Tips'];
-  // String? selectedPopUpItem;
+  List<TripModel> upNotifiableTripList = [];
 
   // on init
   void onInit() {
@@ -40,7 +38,6 @@ class TripProvider extends ChangeNotifier {
         tripEndDate = null;
       }
     }
-
     notifyListeners();
   }
 
@@ -48,11 +45,6 @@ class TripProvider extends ChangeNotifier {
     tripEndDate = dateTime;
     notifyListeners();
   }
-
-  // void setSelectedPopUpItem(String value){
-  //   selectedPopUpItem = value;
-  //   notifyListeners();
-  // }
 
   /*
   * Image picking section start*/
@@ -86,7 +78,9 @@ class TripProvider extends ChangeNotifier {
 
   /*
   * ============= insert trip ============*/
+
 //create trip
+
   Future<bool> saveTrip({
     required String placeName,
     required String district,
@@ -95,7 +89,6 @@ class TripProvider extends ChangeNotifier {
     required String hotelId,
     required num cost,
     required num travellers,
-    required,
   }) async {
     final TripModel tripModel = TripModel(
       placeName: placeName,
@@ -121,7 +114,6 @@ class TripProvider extends ChangeNotifier {
   * ============= query ============*/
   // get all trips
   Future<List<TripModel>> getAllTrips() async {
-    print('getAllHotels');
     try {
       tripList = await TripApi.getAllTrips();
       notifyListeners();
@@ -129,6 +121,18 @@ class TripProvider extends ChangeNotifier {
     } catch (e) {
       print('Error: $e');
       return tripList;
+    }
+  }
+
+  // get notifiable trips
+  Future<List<TripModel>> getNotifiableTrips() async {
+    try {
+      upNotifiableTripList = await TripApi.getNotifiableTrips();
+      notifyListeners();
+      return upNotifiableTripList;
+    } catch (e) {
+      print('Error: $e');
+      return upNotifiableTripList;
     }
   }
 
@@ -155,5 +159,10 @@ class TripProvider extends ChangeNotifier {
   Future<bool> getTripByUserIdTripId(String userId, String tripId) async {
     TripModel? trip = await TripApi.getTripByUserIdTripId(userId, tripId);
     return trip?.placeName != null;
+  }
+
+  // notify users by trip id
+  Future<void> notifyUsersByTripId(String tripId, String message) async{
+    await TripApi.notifyUsersByTripId(tripId, message);
   }
 }

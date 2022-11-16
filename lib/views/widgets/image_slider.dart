@@ -1,21 +1,41 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:just_travel_admin/utils/constants/urls.dart';
+
+import '../../utils/constants/urls.dart';
+import 'network_image_loader.dart';
 
 class ImageSlider extends StatelessWidget {
   final List<String> photos;
-  const ImageSlider({required this.photos, Key? key}) : super(key: key);
+  double height;
+  ImageSlider({required this.photos, this.height = 200, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: photos.length,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-          Image.network(
-        '${baseUrl}uploads/${photos[itemIndex]}',
-      ),
+      itemBuilder: (
+          BuildContext context,
+          int itemIndex,
+          int pageViewIndex,
+          ) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: NetworkImageLoader(
+            image: '${baseUrl}uploads/${photos[itemIndex]}',
+            height: height,
+            width: MediaQuery.of(context).size.width,
+          ),
+          // child: Image.network(
+          //   '${baseUrl}uploads/${photos[itemIndex]}',
+          //   fit: BoxFit.cover,
+          //   height: height,
+          //   width: MediaQuery.of(context).size.width,
+          // ),
+        );
+      },
       options: CarouselOptions(
-        height: 200,
+        height: height,
         aspectRatio: 16 / 9,
         viewportFraction: 0.7,
         initialPage: 0,

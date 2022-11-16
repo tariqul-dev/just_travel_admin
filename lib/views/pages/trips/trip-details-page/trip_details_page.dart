@@ -12,14 +12,15 @@ import '../../../widgets/image_grid_view.dart';
 import 'components/cover_photo.dart';
 import 'components/hotel_list_tile.dart';
 import 'components/join_card.dart';
+import 'components/review.dart';
 import 'components/trip_title_card.dart';
 import 'dialog/show_travelers_dialog.dart';
 
 // ignore: must_be_immutable
 class TripDetailsPage extends StatelessWidget {
   static const routeName = '/request-trips-page/host-trip-details-page';
-  final String id;
-  TripDetailsPage({required this.id, Key? key}) : super(key: key);
+  final String tripId;
+  TripDetailsPage({required this.tripId, Key? key}) : super(key: key);
   RoomModel? roomModel;
   num? numberOfTravellers;
 
@@ -42,7 +43,7 @@ class TripDetailsPage extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: FutureBuilder<TripModel?>(
-              future: context.read<TripProvider>().getTripByTripId(id),
+              future: context.read<TripProvider>().getTripByTripId(tripId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   TripModel? trip = snapshot.data;
@@ -107,16 +108,21 @@ class TripDetailsPage extends StatelessWidget {
                         tripModel: trip,
                         roomModel: roomModel,
                         onShowTravelers: () {
-                          context.read<JoinTripProvider>().getUsersByTripId(trip.id!);
-                            showTravelersDialog(context: context);
+                          context
+                              .read<JoinTripProvider>()
+                              .getUsersByTripId(trip.id!);
+                          showTravelersDialog(context: context);
                         },
                       ),
+
+                      // package review
+                      Review(tripId: tripId),
                     ],
                   );
                 } else if (snapshot.hasError) {
                   return const Text('Trip not found');
                 }
-                //
+
                 return const CircularProgressIndicator();
               },
             ),

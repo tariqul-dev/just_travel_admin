@@ -13,14 +13,18 @@ class DashboardItem {
   // static const String setting = 'Setting';
   // static const String report = 'Report';
   static const String payments = 'Payments';
+  static const String notifiableTrips = 'Notifiable Trips';
 }
 
 final List<DashboardItem> dashboardItems = [
   DashboardItem(icon: Icons.card_giftcard, title: DashboardItem.trips),
   DashboardItem(icon: Icons.category, title: DashboardItem.hotels),
-  DashboardItem(icon: Icons.card_giftcard_outlined, title: DashboardItem.reqTrips),
+  DashboardItem(
+      icon: Icons.card_giftcard_outlined, title: DashboardItem.reqTrips),
   DashboardItem(icon: Icons.person, title: DashboardItem.users),
   // DashboardItem(icon: Icons.settings, title: DashboardItem.setting),
   // DashboardItem(icon: Icons.area_chart, title: DashboardItem.report),
   DashboardItem(icon: Icons.payment, title: DashboardItem.payments),
+  DashboardItem(
+      icon: Icons.wallet_giftcard_sharp, title: DashboardItem.notifiableTrips),
 ];

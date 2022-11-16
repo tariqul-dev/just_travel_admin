@@ -4,6 +4,8 @@ import 'package:just_travel_admin/views/pages/dashboard/dashboard_page.dart';
 import 'package:just_travel_admin/views/pages/signin/signin_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/user_provider.dart';
+
 class LauncherPage extends StatefulWidget {
   static const routeName = '/';
 
@@ -19,26 +21,28 @@ class _LauncherPageState extends State<LauncherPage> {
     // TODO: implement initState
     super.initState();
 
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
+    AuthProvider authProvider = context.read<AuthProvider>();
 
+    UserProvider userProvider = context.read<UserProvider>();
     Future.delayed(
       Duration.zero,
-      () {
-        Navigator.pushNamedAndRemoveUntil(
-            context, DashBoardPage.routeName, (route) => false);
-
+      () async {
         //TODO: fix routing and authentication
         print('launcher page is deciding');
         print('current user: ${authProvider.getCurrentUser()}');
-        // if (authProvider.getCurrentUser() != null) {
-        //
-        //   Navigator.pushNamedAndRemoveUntil(
-        //       context, DashBoardPage.routeName, (route) => false);
-        // } else {
-        //   Navigator.pushNamedAndRemoveUntil(
-        //       context, SignInPage.routeName, (route) => false);
-        // }
+        if (authProvider.getCurrentUser() != null) {
+          try {
+            await userProvider
+                .fetchUserByEmail(authProvider.getCurrentUser()!.email!);
+            Navigator.pushNamedAndRemoveUntil(
+                context, DashBoardPage.routeName, (route) => false);
+          } catch (error) {
+            print('error at launcher page: $error');
+          }
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, SignInPage.routeName, (route) => false);
+        }
       },
     );
   }

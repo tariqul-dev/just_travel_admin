@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../utils/constants/urls.dart';
 import '../../../utils/helper_functions.dart';
 import '../../widgets/network_image_loader.dart';
+import '../../widgets/profile_circular_image.dart';
 
 class UsersPage extends StatelessWidget {
   static const routeName = '/users';
@@ -50,22 +51,30 @@ class UsersPage extends StatelessWidget {
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 5),
                           leading: SizedBox(
-                            width: 50,
-                            height: 100,
-                            child: user.profileImage != null &&
-                                    user.profileImage!.isNotEmpty
-                                ? NetworkImageLoader(
-                                    image:
-                                        '${baseUrl}uploads/${user.profileImage}',
-                                    width: 50,
-                                    height: 100,
-                                  )
-                                : Image.asset(
-                                    'images/img.png',
-                                    width: 50,
-                                    height: 100,
-                                  ),
-                          ),
+                              width: 50,
+                              height: 100,
+                              child: user.profileImage != null &&
+                                      user.profileImage!.isNotEmpty
+                                  ? CircleAvatar(
+                                      radius: 60,
+                                      child: ClipRRect(
+                                        clipBehavior: Clip.antiAlias,
+                                        borderRadius: BorderRadius.circular(60),
+                                        child: ProfileCircularImage(
+                                          radius: 60,
+                                          width: 50,
+                                          height: 50,
+                                          image:
+                                              '${baseUrl}uploads/${user.profileImage}',
+                                        ),
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 50,
+                                      child: Text(
+                                        user.name!.substring(0, 2),
+                                      ),
+                                    )),
                           title: Text(user.name!),
                           subtitle: Text(user.email!.emailId!),
                           // trailing: Row(

@@ -142,8 +142,6 @@ class TripsPage extends StatelessWidget {
         onPressed: () {
           context.read<DistrictsProvider>().getAllDivision();
           Navigator.pushNamed(context, AddTripsPage.routeName);
-
-          Navigator.pushNamed(context, AddTripsPage.routeName);
         },
         child: const Icon(Icons.add),
       ),

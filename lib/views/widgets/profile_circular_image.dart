@@ -16,10 +16,17 @@ class ProfileCircularImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NetworkImageLoader(
-      image: image,
-      width: width,
-      height: height,
+    return  CircleAvatar(
+      radius: radius,
+      child: ClipRRect(
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.circular(radius),
+        child: NetworkImageLoader(
+          image: image,
+          width: width,
+          height: height,
+        )
+      ),
     );
   }
 }

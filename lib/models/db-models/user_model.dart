@@ -1,102 +1,106 @@
 class UserModel {
   UserModel({
+    this.name,
     this.email,
     this.mobile,
-    this.id,
-    this.name,
-    this.district,
     this.division,
+    this.district,
     this.profileImage,
     this.coverImage,
     this.uploadImages,
-    this.trips,
+    this.dob,
+    this.about,
+    this.gender,
+    this.id,
     this.createdAt,
     this.updatedAt,
     this.v,
   });
 
-  @override
-  String toString() {
-    return 'UserModel{email: $email, mobile: $mobile, id: $id, name: $name, district: $district, division: $division, profileImage: $profileImage, coverImage: $coverImage, uploadImages: $uploadImages, trips: $trips, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
-  }
-
   UserModel.fromJson(dynamic json) {
+    name = json['name'];
     email = json['email'] != null ? Email.fromJson(json['email']) : null;
     mobile = json['mobile'] != null ? Mobile.fromJson(json['mobile']) : null;
-    id = json['_id'];
-    name = json['name'];
-    district = json['district'];
     division = json['division'];
+    district = json['district'];
     profileImage = json['profileImage'];
     coverImage = json['coverImage'];
     uploadImages =
         json['uploadImages'] != null ? json['uploadImages'].cast<String>() : [];
-    trips = json['trips'] != null ? json['trips'].cast<String>() : [];
+    dob = json['dob'];
+    about = json['about'];
+    gender = json['gender'];
+    id = json['_id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
   }
+  String? name;
   Email? email;
   Mobile? mobile;
-  String? id;
-  String? name;
-  String? district;
   String? division;
+  String? district;
   String? profileImage;
   String? coverImage;
   List<String>? uploadImages;
-  List<String>? trips;
+  num? dob;
+  String? about;
+  String? gender;
+  String? id;
   String? createdAt;
   String? updatedAt;
   num? v;
   UserModel copyWith({
+    String? name,
     Email? email,
     Mobile? mobile,
-    String? id,
-    String? name,
-    String? district,
     String? division,
+    String? district,
     String? profileImage,
     String? coverImage,
     List<String>? uploadImages,
-    List<String>? trips,
+    num? dob,
+    String? about,
+    String? gender,
+    String? id,
     String? createdAt,
     String? updatedAt,
     num? v,
   }) =>
       UserModel(
+        name: name ?? this.name,
         email: email ?? this.email,
         mobile: mobile ?? this.mobile,
-        id: id ?? this.id,
-        name: name ?? this.name,
-        district: district ?? this.district,
         division: division ?? this.division,
+        district: district ?? this.district,
         profileImage: profileImage ?? this.profileImage,
         coverImage: coverImage ?? this.coverImage,
         uploadImages: uploadImages ?? this.uploadImages,
-        trips: trips ?? this.trips,
+        dob: dob ?? this.dob,
+        about: about ?? this.about,
+        gender: gender ?? this.gender,
+        id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         v: v ?? this.v,
       );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['name'] = name;
     if (email != null) {
       map['email'] = email?.toJson();
     }
     if (mobile != null) {
       map['mobile'] = mobile?.toJson();
     }
-    map['name'] = name;
-    map['district'] = district;
     map['division'] = division;
+    map['district'] = district;
     map['profileImage'] = profileImage;
     map['coverImage'] = coverImage;
     map['uploadImages'] = uploadImages;
-    map['trips'] = trips;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    map['__v'] = v;
+    map['dob'] = dob;
+    map['about'] = about;
+    map['gender'] = gender;
     return map;
   }
 }

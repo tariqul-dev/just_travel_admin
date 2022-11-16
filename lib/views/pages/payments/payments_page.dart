@@ -29,34 +29,36 @@ class PaymentsPage extends StatelessWidget {
                     itemCount: payProvider.allPaymentList.length,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        title: Text(
-                          '${payProvider.allPaymentList[index].userId!.name}',
-                        ),
-                        subtitle: Text(
-                          'Trip: ${payProvider.allPaymentList[index].tripId!.placeName}\n'
-                          'Mobile: ${payProvider.allPaymentList[index].mobileNumber}\n'
-                          'Transaction ID: ${payProvider.allPaymentList[index].tranId}\n'
-                          'Date: ${getFormattedDateTime(dateTime: DateTime.parse(payProvider.allPaymentList[index].createdAt!).millisecondsSinceEpoch, pattern: 'MMM dd yyyy')}\n'
-                          'Status: ${payProvider.allPaymentList[index].status == 'VALID' ? 'PAID' : payProvider.allPaymentList[index].status}',
-                          style: const TextStyle(
-                            height: 1.5,
+                      child: Card(
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          title: Text(
+                            '${payProvider.allPaymentList[index].userId!.name}',
                           ),
-                        ),
-                        trailing: CircleAvatar(
-                          backgroundColor:
-                              payProvider.allPaymentList[index].status ==
-                                      'VALID'
-                                  ? Colors.green
-                                  : Colors.red,
-                          radius: 40,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                  '$currencySymbol${payProvider.allPaymentList[index].amount}'),
+                          subtitle: Text(
+                            'Trip: ${payProvider.allPaymentList[index].tripId!.placeName}\n'
+                            'Mobile: ${payProvider.allPaymentList[index].mobileNumber}\n'
+                            'Transaction ID: ${payProvider.allPaymentList[index].tranId}\n'
+                            'Date: ${getFormattedDateTime(dateTime: DateTime.parse(payProvider.allPaymentList[index].createdAt!).millisecondsSinceEpoch, pattern: 'MMM dd yyyy')}\n'
+                            'Status: ${payProvider.allPaymentList[index].status == 'VALID' ? 'PAID' : payProvider.allPaymentList[index].status}',
+                            style: const TextStyle(
+                              height: 1.5,
+                            ),
+                          ),
+                          trailing: CircleAvatar(
+                            backgroundColor:
+                                payProvider.allPaymentList[index].status ==
+                                        'VALID'
+                                    ? Colors.green
+                                    : Colors.red,
+                            radius: 40,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                    '$currencySymbol${payProvider.allPaymentList[index].amount}'),
+                              ),
                             ),
                           ),
                         ),

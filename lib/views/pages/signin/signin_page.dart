@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/auth_provider.dart';
+import '../../../utils/helper_functions.dart';
 import '../../widgets/custom_form_field.dart';
 import '../../widgets/loading_widget.dart';
 import '../launcher_page.dart';
+import 'components/auth_button.dart';
+import 'components/error_message_text.dart';
 
 class SignInPage extends StatelessWidget {
-  static const String routeName = '/signin';
+  static const String routeName = '/sign_in';
   final TextEditingController emailTextEditingController =
       TextEditingController();
   final TextEditingController passwordTextEditingController =
       TextEditingController();
   final formKey = GlobalKey<FormState>();
-
   SignInPage({Key? key}) : super(key: key);
 
   void setAuthentication(BuildContext context) {
@@ -28,97 +30,100 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Form(
-          key: formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                const Text(
-                  'Your Dream Our Efforts',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: Center(
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                shrinkWrap: true,
+                // physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  Text(
+                    'Just Travel',
+                    style: Theme.of(context).textTheme.headline3,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                // CircleAvatar(
-                //   radius: 40,
-                //   child: Text(
-                //     '',
-                //     style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                //       color: Colors.white,
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 35,
-                // ),
-
-                //  text form fields
-                CustomFormField(
-                  controller: emailTextEditingController,
-                  icon: Icons.email,
-                  labelText: 'Email',
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomFormField(
-                  controller: passwordTextEditingController,
-                  icon: Icons.lock,
-                  labelText: 'Password',
-                  isPassword: true,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                /*
-                * Sign In button*/
-                ElevatedButton(
-                  onPressed: () {
-                    // setting authentication info
-                    setAuthentication(context);
-
-                    // authenticating user
-                    if (formKey.currentState!.validate()) {
-                      showLoadingDialog(context);
-                      context.read<AuthProvider>().authenticate().then(
-                        (value) {
-                          print('Login success');
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              LauncherPage.routeName, (route) => false);
-                        },
-                      ).onError(
-                        (error, stackTrace) {
-                          print('error: $error');
-                        },
-                      );
-                    }
-                  },
-                  child: const Text('Sign In'),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // showing error message
-                Center(
-                  child: Consumer<AuthProvider>(
-                    builder: (context, authProvider, child) => Text(
-                      authProvider.errorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).errorColor,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 50,
                   ),
-                ),
-              ],
+                  Text(
+                    'Your Dream Our Efforts',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                  //  text form fields
+                  CustomFormField(
+                    controller: emailTextEditingController,
+                    icon: Icons.email,
+                    labelText: 'Email',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomFormField(
+                    controller: passwordTextEditingController,
+                    icon: Icons.lock,
+                    labelText: 'Password',
+                    isPassword: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  // Align(
+                  //   alignment: Alignment.bottomRight,
+                  //   child: TextButton(
+                  //     onPressed: () {
+                  //       forgotPasswordDialog(context: context);
+                  //     },
+                  //     child: Text('Forgot Password?'),
+                  //   ),
+                  // ),
+
+                  const SizedBox(
+                    height: 25,
+                  ),
+
+                  /*
+                  * Sign In button*/
+                  AuthButton(
+                    buttonName: 'SIGN IN',
+                    onPressed: () {
+                      // setting authentication info
+                      setAuthentication(context);
+
+                      // authenticating user
+                      if (formKey.currentState!.validate()) {
+                        showLoadingDialog(context);
+                        context.read<AuthProvider>().authenticate().then(
+                          (value) {
+                            print('Login success');
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                LauncherPage.routeName, (route) => false);
+                          },
+                        ).onError(
+                          (error, stackTrace) {
+                            print('error: $error');
+                            Navigator.pop(context);
+                            showMsg(context, error.toString());
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                  // showing error message
+                  const ErrorMessageText(),
+                ],
+              ),
             ),
           ),
         ),
