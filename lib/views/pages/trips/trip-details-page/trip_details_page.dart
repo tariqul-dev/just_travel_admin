@@ -92,9 +92,6 @@ class TripDetailsPage extends StatelessWidget {
                                 context.read<JoinTripProvider>().costCalculate(
                                     trip, numberOfTravellers, roomModel);
                               },
-                              // onSelectRoom: (roomModel, t) {
-                              //
-                              // },
                             ),
                             const SizedBox(
                               height: 10,

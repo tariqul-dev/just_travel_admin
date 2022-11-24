@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel_admin/models/db-models/trip_model.dart';
+import 'package:just_travel_admin/models/db-models/user_model.dart';
 import 'package:just_travel_admin/providers/requested_trips_provider.dart';
+import 'package:just_travel_admin/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/constants/urls.dart';
@@ -46,25 +48,63 @@ class RequestedTripsPage extends StatelessWidget {
                                 context, TripDetailsPage.routeName,
                                 arguments: trip.id);
                           },
-                          contentPadding: const EdgeInsets.symmetric(vertical: 5),
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 5),
                           leading: SizedBox(
                             width: 50,
                             height: 100,
-                            child: trip.photos != null && trip.photos!.isNotEmpty
-                                ? NetworkImageLoader(
-                                    image: '${baseUrl}uploads/${trip.photos![0]}',
-                                    width: 50,
-                                    height: 100,
-                                  )
-                                : Image.asset(
-                                    'images/img.png',
-                                    width: 50,
-                                    height: 100,
-                                  ),
+                            child:
+                                trip.photos != null && trip.photos!.isNotEmpty
+                                    ? NetworkImageLoader(
+                                        image:
+                                            '${baseUrl}uploads/${trip.photos![0]}',
+                                        width: 50,
+                                        height: 100,
+                                      )
+                                    : Image.asset(
+                                        'images/img.png',
+                                        width: 50,
+                                        height: 100,
+                                      ),
                           ),
-                          title: Text(trip.placeName!),
-                          subtitle: Text(
-                              getFormattedDateTime(dateTime: trip.startDate!)),
+                          title: Text(trip.placeName!.toUpperCase()),
+                          subtitle: FutureBuilder<UserModel?>(
+                            future: context
+                                .read<UserProvider>()
+                                .fetchUserByUserId(trip.host!),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final user = snapshot.data;
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      user!.name!,
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                      user.email!.emailId!,
+                                    ),
+                                  ],
+                                );
+                              }
+
+                              if (snapshot.hasError) {
+                                return const Center(
+                                  child: Text('Server error'),
+                                );
+                              }
+
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            },
+                          ),
+
                           trailing: trip.status == 'pending'
                               ? Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -92,9 +132,9 @@ class RequestedTripsPage extends StatelessWidget {
                                   ],
                                 )
                               : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('${trip.status}'),
-                              ),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('${trip.status}'),
+                                ),
 
                           // TextButton(
                           //   onPressed: () {

@@ -16,7 +16,7 @@ class ProfileCircularImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  CircleAvatar(
+    return CircleAvatar(
       radius: radius,
       child: ClipRRect(
         clipBehavior: Clip.antiAlias,
@@ -25,7 +25,7 @@ class ProfileCircularImage extends StatelessWidget {
           image: image,
           width: width,
           height: height,
-        )
+        ),
       ),
     );
   }

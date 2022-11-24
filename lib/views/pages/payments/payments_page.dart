@@ -40,8 +40,9 @@ class PaymentsPage extends StatelessWidget {
                             'Mobile: ${payProvider.allPaymentList[index].mobileNumber}\n'
                             'Transaction ID: ${payProvider.allPaymentList[index].tranId}\n'
                             'Date: ${getFormattedDateTime(dateTime: DateTime.parse(payProvider.allPaymentList[index].createdAt!).millisecondsSinceEpoch, pattern: 'MMM dd yyyy')}\n'
-                            'Status: ${payProvider.allPaymentList[index].status == 'VALID' ? 'PAID' : payProvider.allPaymentList[index].status}',
+                            'Status: ${payProvider.allPaymentList[index].status == 'VALID' ? 'Paid' : payProvider.allPaymentList[index].status}',
                             style: const TextStyle(
+                              fontWeight: FontWeight.w500,
                               height: 1.5,
                             ),
                           ),

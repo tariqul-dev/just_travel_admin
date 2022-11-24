@@ -74,7 +74,7 @@ showTravelersDialog({
                           subtitle: FittedBox(
                             fit: BoxFit.scaleDown,
                             // child: Text('${joinedUser.email?.emailId}'),
-                            child: Text('${joinedUser.id}'),
+                            child: Text('${joinedUser.email!.emailId}'),
                           ),
                           trailing: Text(
                             '$numberOfTravelers',
